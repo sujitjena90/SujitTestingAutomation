@@ -81,7 +81,7 @@ public class NewTest {
 	  WebElement l =driver.findElement(By.xpath("//mat-panel-title[contains(text(),'General')]//following::div[1]"));
 	  JavascriptExecutor j = (JavascriptExecutor) driver;
 	  j.executeScript("arguments[0].click();", l);
-	  Thread.sleep(3000);
+	  Thread.sleep(10000);
 	  driver.findElement(By.xpath("//input[@name='paymentAmount']")).clear();
 	  String price = keyValuePair.get("price").toString();
 	  Thread.sleep(2000);

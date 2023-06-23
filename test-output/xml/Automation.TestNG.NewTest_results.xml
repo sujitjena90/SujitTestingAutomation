@@ -4,14 +4,14 @@
            failures="0"
            errors="0"
            skipped="0"
-           time="164.710">
+           time="189.711">
     <properties></properties>
 
 
 
             <testcase
                 name="f"
-                time="164.710"
+                time="189.711"
                 classname="Automation.TestNG.NewTest">
             </testcase>
 </testsuite>
