@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresh Vegetables - SJ MegaMart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">🛒 SJ <span>MegaMart</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="grocery.html">Grocery</a></li>
+                <li><a href="vegetables.html" class="active">Vegetables</a></li>
+                <li><a href="fashion.html">Fashion</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="cart-icon" id="cartIcon">🛒 <span class="cart-count" id="cartCount">0</span></div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-header veggies-header">
+        <h1>🥦 Fresh Vegetables</h1>
+        <p>Farm fresh, delivered to your doorstep daily</p>
+    </section>
+
+    <section class="filter-bar">
+        <div class="filter-container">
+            <div class="filter-group">
+                <input type="text" id="vegSearch" class="search-input" placeholder="🔍 Search vegetables..." oninput="searchVeggies()">
+            </div>
+            <div class="filter-group">
+                <label>Type:</label>
+                <select id="vegFilter" onchange="filterProducts('vegGrid','vegFilter')">
+                    <option value="all">All</option>
+                    <option value="daily">Daily Essentials</option>
+                    <option value="leafy">Leafy</option>
+                    <option value="root">Root Vegetables</option>
+                    <option value="exotic">Exotic</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <section class="products-section">
+        <div class="product-grid" id="vegGrid">
+            <div class="product-card" data-category="daily" data-price="40" data-name="Tomato">
+                <div class="product-img" style="background:linear-gradient(135deg,#ff6b6b,#ee5a24);">🍅</div>
+                <span class="freshness-badge">🌿 Fresh</span>
+                <div class="product-info"><h4>Tomato</h4><p class="product-price">₹40/kg</p><button class="btn btn-cart" onclick="addToCart('Tomato 1kg',40)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="root" data-price="30" data-name="Potato">
+                <div class="product-img" style="background:linear-gradient(135deg,#dfa579,#c97d4f);">🥔</div>
+                <span class="freshness-badge">🌿 Fresh</span>
+                <div class="product-info"><h4>Potato</h4><p class="product-price">₹30/kg</p><button class="btn btn-cart" onclick="addToCart('Potato 1kg',30)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="daily" data-price="35" data-name="Onion">
+                <div class="product-img" style="background:linear-gradient(135deg,#d4a5a5,#a8577e);">🧅</div>
+                <span class="freshness-badge">🌿 Fresh</span>
+                <div class="product-info"><h4>Onion</h4><p class="product-price">₹35/kg</p><button class="btn btn-cart" onclick="addToCart('Onion 1kg',35)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="root" data-price="45" data-name="Carrot">
+                <div class="product-img" style="background:linear-gradient(135deg,#f39c12,#e67e22);">🥕</div>
+                <span class="freshness-badge">🌿 Fresh</span>
+                <div class="product-info"><h4>Carrot</h4><p class="product-price">₹45/kg</p><button class="btn btn-cart" onclick="addToCart('Carrot 1kg',45)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="daily" data-price="60" data-name="Capsicum">
+                <div class="product-img" style="background:linear-gradient(135deg,#27ae60,#2ecc71);">🫑</div>
+                <span class="freshness-badge">🌿 Fresh</span>
+                <div class="product-info"><h4>Capsicum</h4><p class="product-price">₹60/kg</p><button class="btn btn-cart" onclick="addToCart('Capsicum 1kg',60)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="exotic" data-price="80" data-name="Broccoli">
+                <div class="product-img" style="background:linear-gradient(135deg,#56ab2f,#a8e063);">🥦</div>
+                <span class="freshness-badge">🌿 Premium</span>
+                <div class="product-info"><h4>Broccoli</h4><p class="product-price">₹80/kg</p><button class="btn btn-cart" onclick="addToCart('Broccoli 1kg',80)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="leafy" data-price="25" data-name="Spinach">
+                <div class="product-img" style="background:linear-gradient(135deg,#11998e,#38ef7d);">🥬</div>
+                <span class="freshness-badge">🌿 Fresh</span>
+                <div class="product-info"><h4>Spinach</h4><p class="product-price">₹25/bunch</p><button class="btn btn-cart" onclick="addToCart('Spinach',25)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="daily" data-price="50" data-name="Cauliflower">
+                <div class="product-img" style="background:linear-gradient(135deg,#dfe6e9,#b2bec3);">🥬</div>
+                <span class="freshness-badge">🌿 Fresh</span>
+                <div class="product-info"><h4>Cauliflower</h4><p class="product-price">₹50/piece</p><button class="btn btn-cart" onclick="addToCart('Cauliflower',50)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="daily" data-price="55" data-name="Green Peas">
+                <div class="product-img" style="background:linear-gradient(135deg,#b8e994,#78e08f);">🟢</div>
+                <span class="freshness-badge">🌿 Fresh</span>
+                <div class="product-info"><h4>Green Peas</h4><p class="product-price">₹55/kg</p><button class="btn btn-cart" onclick="addToCart('Green Peas 1kg',55)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="daily" data-price="45" data-name="Beans">
+                <div class="product-img" style="background:linear-gradient(135deg,#38ada9,#079992);">🫛</div>
+                <span class="freshness-badge">🌿 Fresh</span>
+                <div class="product-info"><h4>French Beans</h4><p class="product-price">₹45/kg</p><button class="btn btn-cart" onclick="addToCart('French Beans 1kg',45)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="leafy" data-price="30" data-name="Cabbage">
+                <div class="product-img" style="background:linear-gradient(135deg,#a3cb38,#009432);">🥬</div>
+                <span class="freshness-badge">🌿 Fresh</span>
+                <div class="product-info"><h4>Cabbage</h4><p class="product-price">₹30/piece</p><button class="btn btn-cart" onclick="addToCart('Cabbage',30)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="daily" data-price="25" data-name="Cucumber">
+                <div class="product-img" style="background:linear-gradient(135deg,#7bed9f,#2ed573);">🥒</div>
+                <span class="freshness-badge">🌿 Fresh</span>
+                <div class="product-info"><h4>Cucumber</h4><p class="product-price">₹25/kg</p><button class="btn btn-cart" onclick="addToCart('Cucumber 1kg',25)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="exotic" data-price="120" data-name="Mushroom">
+                <div class="product-img" style="background:linear-gradient(135deg,#d2dae2,#808e9b);">🍄</div>
+                <span class="freshness-badge">🌿 Premium</span>
+                <div class="product-info"><h4>Button Mushroom</h4><p class="product-price">₹120/pack</p><button class="btn btn-cart" onclick="addToCart('Mushroom',120)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="exotic" data-price="35" data-name="Corn">
+                <div class="product-img" style="background:linear-gradient(135deg,#f9ca24,#f0932b);">🌽</div>
+                <span class="freshness-badge">🌿 Fresh</span>
+                <div class="product-info"><h4>Sweet Corn</h4><p class="product-price">₹35/piece</p><button class="btn btn-cart" onclick="addToCart('Sweet Corn',35)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="root" data-price="90" data-name="Ginger">
+                <div class="product-img" style="background:linear-gradient(135deg,#c8a415,#e1b12c);">🫚</div>
+                <span class="freshness-badge">🌿 Fresh</span>
+                <div class="product-info"><h4>Ginger</h4><p class="product-price">₹90/kg</p><button class="btn btn-cart" onclick="addToCart('Ginger 1kg',90)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="root" data-price="70" data-name="Garlic">
+                <div class="product-img" style="background:linear-gradient(135deg,#ffeaa7,#fdcb6e);">🧄</div>
+                <span class="freshness-badge">🌿 Fresh</span>
+                <div class="product-info"><h4>Garlic</h4><p class="product-price">₹70/kg</p><button class="btn btn-cart" onclick="addToCart('Garlic 1kg',70)">Add to Cart</button></div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col"><h3>🛒 SJ MegaMart</h3><p>Your trusted marketplace by Sujit Jena.</p></div>
+            <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="grocery.html">Grocery</a></li><li><a href="vegetables.html">Vegetables</a></li><li><a href="fashion.html">Fashion</a></li></ul></div>
+            <div class="footer-col"><h4>Contact</h4><ul><li>📧 contact@sjmegamart.com</li><li>📞 +91-9876543210</li><li>📍 Bhubaneswar, India</li></ul></div>
+            <div class="footer-col"><h4>Follow Us</h4><div class="social-links"><a href="#" class="social-btn">FB</a><a href="#" class="social-btn">TW</a><a href="#" class="social-btn">IG</a><a href="#" class="social-btn">YT</a></div></div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2026 SJ MegaMart by Sujit Jena. All rights reserved.</p></div>
+    </footer>
+
+    <div class="toast" id="toast"><span id="toastMessage">Item added to cart!</span></div>
+    <script src="js/script.js"></script>
+</body>
+</html>

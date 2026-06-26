@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery - SJ MegaMart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">🛒 SJ <span>MegaMart</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="grocery.html" class="active">Grocery</a></li>
+                <li><a href="vegetables.html">Vegetables</a></li>
+                <li><a href="fashion.html">Fashion</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="cart-icon" id="cartIcon">🛒 <span class="cart-count" id="cartCount">0</span></div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-header grocery-header">
+        <h1>🏪 Grocery Store</h1>
+        <p>Daily essentials at the best prices</p>
+    </section>
+
+    <section class="filter-bar">
+        <div class="filter-container">
+            <div class="filter-group">
+                <label>Category:</label>
+                <select id="groceryFilter" onchange="filterProducts('groceryGrid','groceryFilter')">
+                    <option value="all">All Items</option>
+                    <option value="staples">Staples</option>
+                    <option value="dairy">Dairy</option>
+                    <option value="beverages">Beverages</option>
+                    <option value="snacks">Snacks & Spreads</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Sort:</label>
+                <select id="grocerySort" onchange="sortProducts('groceryGrid')">
+                    <option value="default">Default</option>
+                    <option value="low-high">Price: Low to High</option>
+                    <option value="high-low">Price: High to Low</option>
+                    <option value="name">Name: A-Z</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <section class="products-section">
+        <div class="product-grid" id="groceryGrid">
+            <div class="product-card" data-category="staples" data-price="180" data-name="Basmati Rice">
+                <div class="product-img" style="background:linear-gradient(135deg,#f5f7fa,#c3cfe2);">🍚</div>
+                <div class="product-info"><span class="product-tag tag-staples">Staples</span><h4>Basmati Rice (5kg)</h4><div class="rating">⭐⭐⭐⭐⭐</div><p class="product-price">₹180</p><button class="btn btn-cart" onclick="addToCart('Basmati Rice 5kg',180)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="staples" data-price="55" data-name="Wheat Flour">
+                <div class="product-img" style="background:linear-gradient(135deg,#ffecd2,#fcb69f);">🌾</div>
+                <div class="product-info"><span class="product-tag tag-staples">Staples</span><h4>Wheat Flour (1kg)</h4><div class="rating">⭐⭐⭐⭐</div><p class="product-price">₹55</p><button class="btn btn-cart" onclick="addToCart('Wheat Flour 1kg',55)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="staples" data-price="45" data-name="Sugar">
+                <div class="product-img" style="background:linear-gradient(135deg,#fff1eb,#ace0f9);">🍬</div>
+                <div class="product-info"><span class="product-tag tag-staples">Staples</span><h4>Sugar (1kg)</h4><div class="rating">⭐⭐⭐⭐</div><p class="product-price">₹45</p><button class="btn btn-cart" onclick="addToCart('Sugar 1kg',45)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="staples" data-price="22" data-name="Salt">
+                <div class="product-img" style="background:linear-gradient(135deg,#e0c3fc,#8ec5fc);">🧂</div>
+                <div class="product-info"><span class="product-tag tag-staples">Staples</span><h4>Iodized Salt (1kg)</h4><div class="rating">⭐⭐⭐⭐⭐</div><p class="product-price">₹22</p><button class="btn btn-cart" onclick="addToCart('Iodized Salt',22)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="staples" data-price="160" data-name="Cooking Oil">
+                <div class="product-img" style="background:linear-gradient(135deg,#f6d365,#fda085);">🫒</div>
+                <div class="product-info"><span class="product-tag tag-staples">Staples</span><h4>Cooking Oil (1L)</h4><div class="rating">⭐⭐⭐⭐</div><p class="product-price">₹160</p><button class="btn btn-cart" onclick="addToCart('Cooking Oil 1L',160)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="staples" data-price="90" data-name="Toor Dal">
+                <div class="product-img" style="background:linear-gradient(135deg,#fddb92,#d1fdff);">🫘</div>
+                <div class="product-info"><span class="product-tag tag-staples">Staples</span><h4>Toor Dal (1kg)</h4><div class="rating">⭐⭐⭐⭐⭐</div><p class="product-price">₹90</p><button class="btn btn-cart" onclick="addToCart('Toor Dal 1kg',90)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="dairy" data-price="28" data-name="Milk">
+                <div class="product-img" style="background:linear-gradient(135deg,#e6e9f0,#eef1f5);">🥛</div>
+                <div class="product-info"><span class="product-tag tag-dairy">Dairy</span><h4>Fresh Milk (500ml)</h4><div class="rating">⭐⭐⭐⭐⭐</div><p class="product-price">₹28</p><button class="btn btn-cart" onclick="addToCart('Fresh Milk',28)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="dairy" data-price="55" data-name="Butter">
+                <div class="product-img" style="background:linear-gradient(135deg,#fff9c4,#ffe082);">🧈</div>
+                <div class="product-info"><span class="product-tag tag-dairy">Dairy</span><h4>Amul Butter (100g)</h4><div class="rating">⭐⭐⭐⭐⭐</div><p class="product-price">₹55</p><button class="btn btn-cart" onclick="addToCart('Amul Butter',55)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="dairy" data-price="40" data-name="Bread">
+                <div class="product-img" style="background:linear-gradient(135deg,#ffeaa7,#dfe6e9);">🍞</div>
+                <div class="product-info"><span class="product-tag tag-dairy">Dairy</span><h4>Brown Bread</h4><div class="rating">⭐⭐⭐⭐</div><p class="product-price">₹40</p><button class="btn btn-cart" onclick="addToCart('Brown Bread',40)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="beverages" data-price="250" data-name="Tea">
+                <div class="product-img" style="background:linear-gradient(135deg,#a8e063,#56ab2f);">🍵</div>
+                <div class="product-info"><span class="product-tag tag-beverages">Beverages</span><h4>Premium Tea (250g)</h4><div class="rating">⭐⭐⭐⭐⭐</div><p class="product-price">₹250</p><button class="btn btn-cart" onclick="addToCart('Premium Tea',250)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="beverages" data-price="350" data-name="Coffee">
+                <div class="product-img" style="background:linear-gradient(135deg,#4b3621,#795548);">☕</div>
+                <div class="product-info"><span class="product-tag tag-beverages">Beverages</span><h4>Filter Coffee (200g)</h4><div class="rating">⭐⭐⭐⭐⭐</div><p class="product-price">₹350</p><button class="btn btn-cart" onclick="addToCart('Filter Coffee',350)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="snacks" data-price="120" data-name="Honey">
+                <div class="product-img" style="background:linear-gradient(135deg,#f7971e,#ffd200);">🍯</div>
+                <div class="product-info"><span class="product-tag tag-snacks">Snacks</span><h4>Pure Honey (250g)</h4><div class="rating">⭐⭐⭐⭐⭐</div><p class="product-price">₹120</p><button class="btn btn-cart" onclick="addToCart('Pure Honey',120)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="snacks" data-price="85" data-name="Jam">
+                <div class="product-img" style="background:linear-gradient(135deg,#ee0979,#ff6a00);">🍓</div>
+                <div class="product-info"><span class="product-tag tag-snacks">Snacks</span><h4>Mixed Fruit Jam</h4><div class="rating">⭐⭐⭐⭐</div><p class="product-price">₹85</p><button class="btn btn-cart" onclick="addToCart('Mixed Fruit Jam',85)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="snacks" data-price="140" data-name="Pasta">
+                <div class="product-img" style="background:linear-gradient(135deg,#fbc2eb,#a6c1ee);">🍝</div>
+                <div class="product-info"><span class="product-tag tag-snacks">Snacks</span><h4>Penne Pasta (500g)</h4><div class="rating">⭐⭐⭐⭐</div><p class="product-price">₹140</p><button class="btn btn-cart" onclick="addToCart('Penne Pasta',140)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="snacks" data-price="65" data-name="Cornflakes">
+                <div class="product-img" style="background:linear-gradient(135deg,#43e97b,#38f9d7);">🥣</div>
+                <div class="product-info"><span class="product-tag tag-snacks">Snacks</span><h4>Cornflakes (500g)</h4><div class="rating">⭐⭐⭐⭐</div><p class="product-price">₹65</p><button class="btn btn-cart" onclick="addToCart('Cornflakes',65)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="staples" data-price="75" data-name="Spices">
+                <div class="product-img" style="background:linear-gradient(135deg,#ff5858,#f09819);">🌶️</div>
+                <div class="product-info"><span class="product-tag tag-staples">Staples</span><h4>Garam Masala (100g)</h4><div class="rating">⭐⭐⭐⭐⭐</div><p class="product-price">₹75</p><button class="btn btn-cart" onclick="addToCart('Garam Masala',75)">Add to Cart</button></div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col"><h3>🛒 SJ MegaMart</h3><p>Your trusted marketplace by Sujit Jena.</p></div>
+            <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="grocery.html">Grocery</a></li><li><a href="vegetables.html">Vegetables</a></li><li><a href="fashion.html">Fashion</a></li></ul></div>
+            <div class="footer-col"><h4>Contact</h4><ul><li>📧 contact@sjmegamart.com</li><li>📞 +91-9876543210</li><li>📍 Bhubaneswar, India</li></ul></div>
+            <div class="footer-col"><h4>Follow Us</h4><div class="social-links"><a href="#" class="social-btn">FB</a><a href="#" class="social-btn">TW</a><a href="#" class="social-btn">IG</a><a href="#" class="social-btn">YT</a></div></div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2026 SJ MegaMart by Sujit Jena. All rights reserved.</p></div>
+    </footer>
+
+    <div class="toast" id="toast"><span id="toastMessage">Item added to cart!</span></div>
+    <script src="js/script.js"></script>
+</body>
+</html>
