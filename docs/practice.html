@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Page - Automation Academy</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header-top">
+        <div class="header-content">
+            <div class="banner">
+                <span class="banner-text">✨ Practice & Improve Your Automation Skills ✨</span>
+            </div>
+            <div class="header-buttons">
+                <a href="index.html" class="btn btn-nav">Home</a>
+                <a href="practice.html" class="btn btn-nav">Practice</a>
+                <a href="#" class="btn btn-nav" onclick="alert('Login feature coming soon!')">Login</a>
+                <a href="#" class="btn btn-nav" onclick="alert('Signup feature coming soon!')">Signup</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h1>🎓 SUJIT JENA</h1>
+                <p>Automation Academy</p>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="courses.html" class="nav-link">Courses</a></li>
+                <li><a href="#" class="nav-link">All Access Plan <span class="badge">NEW</span></a></li>
+                <li><a href="#" class="nav-link">Learning Paths <span class="badge">NEW</span></a></li>
+                <li><a href="#" class="nav-link">Mentorship</a></li>
+                <li><a href="#" class="nav-link">Job Support</a></li>
+                <li><a href="practice.html" class="nav-link active">Practice</a></li>
+                <li><a href="#" class="nav-link">Blog</a></li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">More ⬇️</a>
+                    <div class="dropdown-menu">
+                        <a href="#">About Us</a>
+                        <a href="#">Contact</a>
+                        <a href="#">FAQ</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <h1 class="page-title">Practice Page</h1>
+
+        <!-- Radio Button Example -->
+        <section class="practice-section">
+            <div class="section-label">Radio Button Example</div>
+            <div class="form-group">
+                <label class="radio-label">
+                    <input type="radio" name="radioExample" value="option1"> Radio1
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="radioExample" value="option2"> Radio2
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="radioExample" value="option3"> Radio3
+                </label>
+            </div>
+        </section>
+
+        <!-- Suggestion/Autocomplete Example -->
+        <section class="practice-section" style="position: relative;">
+            <div class="section-label">Suggestion Class Example</div>
+            <input type="text" class="input-field" placeholder="Type to Select Countries" id="countryInput">
+            <div id="suggestionDropdown" class="suggestion-dropdown"></div>
+        </section>
+
+        <!-- Dropdown Example -->
+        <section class="practice-section">
+            <div class="section-label">Dropdown Example</div>
+            <select class="dropdown-field" id="dropdownExample">
+                <option value="">Select</option>
+                <option value="india">India</option>
+                <option value="usa">USA</option>
+                <option value="canada">Canada</option>
+                <option value="australia">Australia</option>
+                <option value="uk">United Kingdom</option>
+            </select>
+        </section>
+
+        <!-- Checkbox Example -->
+        <section class="practice-section">
+            <div class="section-label">Checkbox Example</div>
+            <div class="form-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" name="option" value="1"> Option1
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="option" value="2"> Option2
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="option" value="3"> Option3
+                </label>
+            </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- Switch Window Example -->
+        <section class="practice-section">
+            <div class="section-label">Switch Window Example</div>
+            <button class="btn btn-action" id="openWindowBtn">Open Window</button>
+            <div id="windowMessage" class="action-message" style="display: none;">
+                ✅ New window opened successfully!
+            </div>
+        </section>
+
+        <!-- Switch Tab Example -->
+        <section class="practice-section">
+            <div class="section-label">Switch Tab Example</div>
+            <button class="btn btn-action" id="openTabBtn">Open Tab</button>
+            <div id="tabMessage" class="action-message" style="display: none;">
+                ✅ New tab opened successfully!
+            </div>
+        </section>
+
+        <!-- Alert & Confirm Example -->
+        <section class="practice-section">
+            <div class="section-label">Switch To Alert Example</div>
+            <input type="text" class="input-field" placeholder="Enter Your Name" id="nameInput">
+            <div style="margin-top: 15px;">
+                <button class="btn btn-alert" id="alertBtn">Alert</button>
+                <button class="btn btn-confirm" id="confirmBtn">Confirm</button>
+            </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- Web Table Example -->
+        <section class="practice-section">
+            <div class="section-label">Web Table Example</div>
+            <div class="table-wrapper">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Instructor</th>
+                            <th>Course</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Sujit Jena</td>
+                            <td>Selenium Webdriver with Java Basics + Advanced + Interview Guide</td>
+                            <td>30</td>
+                        </tr>
+                        <tr>
+                            <td>Sujit Jena</td>
+                            <td>Learn SQL in Practical + Database Testing from Scratch</td>
+                            <td>25</td>
+                        </tr>
+                        <tr>
+                            <td>Sujit Jena</td>
+                            <td>Appium (Selenium) - Mobile Automation Testing from Scratch</td>
+                            <td>30</td>
+                        </tr>
+                        <tr>
+                            <td>Sujit Jena</td>
+                            <td>WebSecurity Testing for Beginners- QA knowledge to next level</td>
+                            <td>20</td>
+                        </tr>
+                        <tr>
+                            <td>Sujit Jena</td>
+                            <td>Learn JMETER from Scratch - (Performance + Load) Testing Tool</td>
+                            <td>25</td>
+                        </tr>
+                        <tr>
+                            <td>Sujit Jena</td>
+                            <td>WebServices / REST API Testing with SoapUI</td>
+                            <td>35</td>
+                        </tr>
+                        <tr>
+                            <td>Sujit Jena</td>
+                            <td>QA Expert Course: Software Testing + Bugzilla + SQL + Agile</td>
+                            <td>25</td>
+                        </tr>
+                        <tr>
+                            <td>Sujit Jena</td>
+                            <td>Master Selenium Automation in simple Python Language</td>
+                            <td>25</td>
+                        </tr>
+                        <tr>
+                            <td>Sujit Jena</td>
+                            <td>Advanced Selenium Framework Pageobject, TestNG, Maven, Jenkins</td>
+                            <td>20</td>
+                        </tr>
+                        <tr>
+                            <td>Sujit Jena</td>
+                            <td>Write effective QA Resume that will turn to interview call</td>
+                            <td>0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Element Displayed Example -->
+        <section class="practice-section">
+            <div class="section-label">Element Displayed Example</div>
+            <div style="margin-bottom: 15px;">
+                <button class="btn btn-action" id="hideBtn">Hide</button>
+                <button class="btn btn-action" id="showBtn">Show</button>
+            </div>
+            <div id="displayElement" class="element-display">Hide/Show Example</div>
+        </section>
+
+        <!-- Fixed Header Table Example -->
+        <section class="practice-section">
+            <div class="section-label">Web Table Fixed Header</div>
+            <div class="table-wrapper-fixed">
+                <table class="data-table-fixed">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>City</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Alex</td>
+                            <td>Engineer</td>
+                            <td>Chennai</td>
+                            <td>28</td>
+                        </tr>
+                        <tr>
+                            <td>Ben</td>
+                            <td>Mechanic</td>
+                            <td>Bengaluru</td>
+                            <td>23</td>
+                        </tr>
+                        <tr>
+                            <td>Dwayne</td>
+                            <td>Manager</td>
+                            <td>Kolkata</td>
+                            <td>48</td>
+                        </tr>
+                        <tr>
+                            <td>Ivory</td>
+                            <td>Receptionist</td>
+                            <td>Chennai</td>
+                            <td>18</td>
+                        </tr>
+                        <tr>
+                            <td>Jack</td>
+                            <td>Engineer</td>
+                            <td>Pune</td>
+                            <td>32</td>
+                        </tr>
+                        <tr>
+                            <td>Jim</td>
+                            <td>Designer</td>
+                            <td>Chennai</td>
+                            <td>46</td>
+                        </tr>
+                        <tr>
+                            <td>Joe</td>
+                            <td>Postman</td>
+                            <td>Chennai</td>
+                            <td>46</td>
+                        </tr>
+                        <tr>
+                            <td>Lara</td>
+                            <td>Developer</td>
+                            <td>Mumbai</td>
+                            <td>55</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="table-total"><strong>Total Amount Collected: 296</strong></p>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- Mouse Hover Example -->
+        <section class="practice-section">
+            <div class="section-label">Mouse Hover Example</div>
+            <div class="mouse-hover-container">
+                <button class="btn btn-hover-example" id="mouseHoverBtn">Mouse Hover</button>
+                <div class="hover-dropdown" id="hoverDropdown">
+                    <a href="#">Top</a>
+                    <a href="#">Reload</a>
+                </div>
+            </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- iFrame Example -->
+        <section class="practice-section">
+            <div class="section-label">iFrame Example</div>
+            <div class="iframe-container">
+                <iframe src="https://www.wikipedia.org" width="100%" height="400" class="iframe-example" title="iFrame Example"></iframe>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Discount Coupons</h3>
+                <ul>
+                    <li><a href="#" class="footer-link">REST API</a></li>
+                    <li><a href="#" class="footer-link">SoapUI</a></li>
+                    <li><a href="#" class="footer-link">Appium</a></li>
+                    <li><a href="#" class="footer-link">JMeter</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Latest News</h3>
+                <ul>
+                    <li><a href="#" class="footer-link">New Course Released</a></li>
+                    <li><a href="#" class="footer-link">Testing Best Practices</a></li>
+                    <li><a href="#" class="footer-link">Career Tips for QA</a></li>
+                    <li><a href="#" class="footer-link">Upcoming Webinars</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <ul>
+                    <li><a href="mailto:contact@sujitjena.com" class="footer-link">📧 contact@sujitjena.com</a></li>
+                    <li><a href="#" class="footer-link">Support Portal</a></li>
+                    <li><a href="#" class="footer-link">Office Location</a></li>
+                    <li><a href="#" class="footer-link">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Social Media</h3>
+                <ul>
+                    <li><a href="https://facebook.com" target="_blank" class="footer-link">Facebook</a></li>
+                    <li><a href="https://twitter.com" target="_blank" class="footer-link">Twitter</a></li>
+                    <li><a href="https://linkedin.com" target="_blank" class="footer-link">LinkedIn</a></li>
+                    <li><a href="https://youtube.com" target="_blank" class="footer-link">YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Sujit Jena - Automation Academy. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
