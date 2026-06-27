@@ -25,7 +25,7 @@
 
     <section class="page-header grocery-header">
         <h1>🏪 Grocery Store</h1>
-        <p>Daily essentials at the best prices</p>
+        <p>Daily essentials at the best prices — like your neighbourhood kirana store</p>
     </section>
 
     <section class="filter-bar">
@@ -35,7 +35,7 @@
                 <select id="groceryFilter" onchange="filterProducts('groceryGrid','groceryFilter')">
                     <option value="all">All Items</option>
                     <option value="staples">Staples</option>
-                    <option value="dairy">Dairy</option>
+                    <option value="dairy">Dairy & Bakery</option>
                     <option value="beverages">Beverages</option>
                     <option value="snacks">Snacks & Spreads</option>
                 </select>
@@ -55,68 +55,68 @@
     <section class="products-section">
         <div class="product-grid" id="groceryGrid">
             <div class="product-card" data-category="staples" data-price="180" data-name="Basmati Rice">
-                <div class="product-img" style="background:linear-gradient(135deg,#f5f7fa,#c3cfe2);">🍚</div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=300&h=200&fit=crop" alt="Basmati Rice"></div>
                 <div class="product-info"><span class="product-tag tag-staples">Staples</span><h4>Basmati Rice (5kg)</h4><div class="rating">⭐⭐⭐⭐⭐</div><p class="product-price">₹180</p><button class="btn btn-cart" onclick="addToCart('Basmati Rice 5kg',180)">Add to Cart</button></div>
             </div>
             <div class="product-card" data-category="staples" data-price="55" data-name="Wheat Flour">
-                <div class="product-img" style="background:linear-gradient(135deg,#ffecd2,#fcb69f);">🌾</div>
-                <div class="product-info"><span class="product-tag tag-staples">Staples</span><h4>Wheat Flour (1kg)</h4><div class="rating">⭐⭐⭐⭐</div><p class="product-price">₹55</p><button class="btn btn-cart" onclick="addToCart('Wheat Flour 1kg',55)">Add to Cart</button></div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?w=300&h=200&fit=crop" alt="Wheat Flour"></div>
+                <div class="product-info"><span class="product-tag tag-staples">Staples</span><h4>Wheat Flour / Atta (1kg)</h4><div class="rating">⭐⭐⭐⭐</div><p class="product-price">₹55</p><button class="btn btn-cart" onclick="addToCart('Wheat Flour 1kg',55)">Add to Cart</button></div>
             </div>
             <div class="product-card" data-category="staples" data-price="45" data-name="Sugar">
-                <div class="product-img" style="background:linear-gradient(135deg,#fff1eb,#ace0f9);">🍬</div>
-                <div class="product-info"><span class="product-tag tag-staples">Staples</span><h4>Sugar (1kg)</h4><div class="rating">⭐⭐⭐⭐</div><p class="product-price">₹45</p><button class="btn btn-cart" onclick="addToCart('Sugar 1kg',45)">Add to Cart</button></div>
-            </div>
-            <div class="product-card" data-category="staples" data-price="22" data-name="Salt">
-                <div class="product-img" style="background:linear-gradient(135deg,#e0c3fc,#8ec5fc);">🧂</div>
-                <div class="product-info"><span class="product-tag tag-staples">Staples</span><h4>Iodized Salt (1kg)</h4><div class="rating">⭐⭐⭐⭐⭐</div><p class="product-price">₹22</p><button class="btn btn-cart" onclick="addToCart('Iodized Salt',22)">Add to Cart</button></div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=300&h=200&fit=crop" alt="Sugar"></div>
+                <div class="product-info"><span class="product-tag tag-staples">Staples</span><h4>Sugar / Cheeni (1kg)</h4><div class="rating">⭐⭐⭐⭐</div><p class="product-price">₹45</p><button class="btn btn-cart" onclick="addToCart('Sugar 1kg',45)">Add to Cart</button></div>
             </div>
             <div class="product-card" data-category="staples" data-price="160" data-name="Cooking Oil">
-                <div class="product-img" style="background:linear-gradient(135deg,#f6d365,#fda085);">🫒</div>
-                <div class="product-info"><span class="product-tag tag-staples">Staples</span><h4>Cooking Oil (1L)</h4><div class="rating">⭐⭐⭐⭐</div><p class="product-price">₹160</p><button class="btn btn-cart" onclick="addToCart('Cooking Oil 1L',160)">Add to Cart</button></div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1474979266404-7f28db3e3ad7?w=300&h=200&fit=crop" alt="Cooking Oil"></div>
+                <div class="product-info"><span class="product-tag tag-staples">Staples</span><h4>Sunflower Oil (1L)</h4><div class="rating">⭐⭐⭐⭐</div><p class="product-price">₹160</p><button class="btn btn-cart" onclick="addToCart('Sunflower Oil 1L',160)">Add to Cart</button></div>
             </div>
             <div class="product-card" data-category="staples" data-price="90" data-name="Toor Dal">
-                <div class="product-img" style="background:linear-gradient(135deg,#fddb92,#d1fdff);">🫘</div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1613758947307-f3d8e92f1293?w=300&h=200&fit=crop" alt="Toor Dal"></div>
                 <div class="product-info"><span class="product-tag tag-staples">Staples</span><h4>Toor Dal (1kg)</h4><div class="rating">⭐⭐⭐⭐⭐</div><p class="product-price">₹90</p><button class="btn btn-cart" onclick="addToCart('Toor Dal 1kg',90)">Add to Cart</button></div>
             </div>
+            <div class="product-card" data-category="staples" data-price="75" data-name="Spices">
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=300&h=200&fit=crop" alt="Indian Spices"></div>
+                <div class="product-info"><span class="product-tag tag-staples">Staples</span><h4>Garam Masala (100g)</h4><div class="rating">⭐⭐⭐⭐⭐</div><p class="product-price">₹75</p><button class="btn btn-cart" onclick="addToCart('Garam Masala',75)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="staples" data-price="22" data-name="Salt">
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1518110925495-5fe2c8bbed65?w=300&h=200&fit=crop" alt="Salt"></div>
+                <div class="product-info"><span class="product-tag tag-staples">Staples</span><h4>Iodized Salt (1kg)</h4><div class="rating">⭐⭐⭐⭐⭐</div><p class="product-price">₹22</p><button class="btn btn-cart" onclick="addToCart('Iodized Salt',22)">Add to Cart</button></div>
+            </div>
             <div class="product-card" data-category="dairy" data-price="28" data-name="Milk">
-                <div class="product-img" style="background:linear-gradient(135deg,#e6e9f0,#eef1f5);">🥛</div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1563636619-e9143da7973b?w=300&h=200&fit=crop" alt="Fresh Milk"></div>
                 <div class="product-info"><span class="product-tag tag-dairy">Dairy</span><h4>Fresh Milk (500ml)</h4><div class="rating">⭐⭐⭐⭐⭐</div><p class="product-price">₹28</p><button class="btn btn-cart" onclick="addToCart('Fresh Milk',28)">Add to Cart</button></div>
             </div>
             <div class="product-card" data-category="dairy" data-price="55" data-name="Butter">
-                <div class="product-img" style="background:linear-gradient(135deg,#fff9c4,#ffe082);">🧈</div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=300&h=200&fit=crop" alt="Butter"></div>
                 <div class="product-info"><span class="product-tag tag-dairy">Dairy</span><h4>Amul Butter (100g)</h4><div class="rating">⭐⭐⭐⭐⭐</div><p class="product-price">₹55</p><button class="btn btn-cart" onclick="addToCart('Amul Butter',55)">Add to Cart</button></div>
             </div>
             <div class="product-card" data-category="dairy" data-price="40" data-name="Bread">
-                <div class="product-img" style="background:linear-gradient(135deg,#ffeaa7,#dfe6e9);">🍞</div>
-                <div class="product-info"><span class="product-tag tag-dairy">Dairy</span><h4>Brown Bread</h4><div class="rating">⭐⭐⭐⭐</div><p class="product-price">₹40</p><button class="btn btn-cart" onclick="addToCart('Brown Bread',40)">Add to Cart</button></div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=300&h=200&fit=crop" alt="Bread"></div>
+                <div class="product-info"><span class="product-tag tag-dairy">Dairy & Bakery</span><h4>Brown Bread</h4><div class="rating">⭐⭐⭐⭐</div><p class="product-price">₹40</p><button class="btn btn-cart" onclick="addToCart('Brown Bread',40)">Add to Cart</button></div>
+            </div>
+            <div class="product-card" data-category="dairy" data-price="35" data-name="Paneer">
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=300&h=200&fit=crop" alt="Paneer"></div>
+                <div class="product-info"><span class="product-tag tag-dairy">Dairy</span><h4>Fresh Paneer (200g)</h4><div class="rating">⭐⭐⭐⭐⭐</div><p class="product-price">₹35</p><button class="btn btn-cart" onclick="addToCart('Fresh Paneer',35)">Add to Cart</button></div>
             </div>
             <div class="product-card" data-category="beverages" data-price="250" data-name="Tea">
-                <div class="product-img" style="background:linear-gradient(135deg,#a8e063,#56ab2f);">🍵</div>
-                <div class="product-info"><span class="product-tag tag-beverages">Beverages</span><h4>Premium Tea (250g)</h4><div class="rating">⭐⭐⭐⭐⭐</div><p class="product-price">₹250</p><button class="btn btn-cart" onclick="addToCart('Premium Tea',250)">Add to Cart</button></div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=300&h=200&fit=crop" alt="Tea"></div>
+                <div class="product-info"><span class="product-tag tag-beverages">Beverages</span><h4>Assam Tea (250g)</h4><div class="rating">⭐⭐⭐⭐⭐</div><p class="product-price">₹250</p><button class="btn btn-cart" onclick="addToCart('Assam Tea',250)">Add to Cart</button></div>
             </div>
             <div class="product-card" data-category="beverages" data-price="350" data-name="Coffee">
-                <div class="product-img" style="background:linear-gradient(135deg,#4b3621,#795548);">☕</div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=300&h=200&fit=crop" alt="Coffee"></div>
                 <div class="product-info"><span class="product-tag tag-beverages">Beverages</span><h4>Filter Coffee (200g)</h4><div class="rating">⭐⭐⭐⭐⭐</div><p class="product-price">₹350</p><button class="btn btn-cart" onclick="addToCart('Filter Coffee',350)">Add to Cart</button></div>
             </div>
             <div class="product-card" data-category="snacks" data-price="120" data-name="Honey">
-                <div class="product-img" style="background:linear-gradient(135deg,#f7971e,#ffd200);">🍯</div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=300&h=200&fit=crop" alt="Honey"></div>
                 <div class="product-info"><span class="product-tag tag-snacks">Snacks</span><h4>Pure Honey (250g)</h4><div class="rating">⭐⭐⭐⭐⭐</div><p class="product-price">₹120</p><button class="btn btn-cart" onclick="addToCart('Pure Honey',120)">Add to Cart</button></div>
             </div>
-            <div class="product-card" data-category="snacks" data-price="85" data-name="Jam">
-                <div class="product-img" style="background:linear-gradient(135deg,#ee0979,#ff6a00);">🍓</div>
-                <div class="product-info"><span class="product-tag tag-snacks">Snacks</span><h4>Mixed Fruit Jam</h4><div class="rating">⭐⭐⭐⭐</div><p class="product-price">₹85</p><button class="btn btn-cart" onclick="addToCart('Mixed Fruit Jam',85)">Add to Cart</button></div>
-            </div>
             <div class="product-card" data-category="snacks" data-price="140" data-name="Pasta">
-                <div class="product-img" style="background:linear-gradient(135deg,#fbc2eb,#a6c1ee);">🍝</div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1551462147-ff29053bfc14?w=300&h=200&fit=crop" alt="Pasta"></div>
                 <div class="product-info"><span class="product-tag tag-snacks">Snacks</span><h4>Penne Pasta (500g)</h4><div class="rating">⭐⭐⭐⭐</div><p class="product-price">₹140</p><button class="btn btn-cart" onclick="addToCart('Penne Pasta',140)">Add to Cart</button></div>
             </div>
             <div class="product-card" data-category="snacks" data-price="65" data-name="Cornflakes">
-                <div class="product-img" style="background:linear-gradient(135deg,#43e97b,#38f9d7);">🥣</div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1517456793572-1d8efd6dc135?w=300&h=200&fit=crop" alt="Cornflakes"></div>
                 <div class="product-info"><span class="product-tag tag-snacks">Snacks</span><h4>Cornflakes (500g)</h4><div class="rating">⭐⭐⭐⭐</div><p class="product-price">₹65</p><button class="btn btn-cart" onclick="addToCart('Cornflakes',65)">Add to Cart</button></div>
-            </div>
-            <div class="product-card" data-category="staples" data-price="75" data-name="Spices">
-                <div class="product-img" style="background:linear-gradient(135deg,#ff5858,#f09819);">🌶️</div>
-                <div class="product-info"><span class="product-tag tag-staples">Staples</span><h4>Garam Masala (100g)</h4><div class="rating">⭐⭐⭐⭐⭐</div><p class="product-price">₹75</p><button class="btn btn-cart" onclick="addToCart('Garam Masala',75)">Add to Cart</button></div>
             </div>
         </div>
     </section>

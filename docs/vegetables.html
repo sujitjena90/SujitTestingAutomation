@@ -25,7 +25,7 @@
 
     <section class="page-header veggies-header">
         <h1>🥦 Fresh Vegetables</h1>
-        <p>Farm fresh, delivered to your doorstep daily</p>
+        <p>Farm fresh from Indian markets, delivered to your doorstep daily</p>
     </section>
 
     <section class="filter-bar">
@@ -38,7 +38,7 @@
                 <select id="vegFilter" onchange="filterProducts('vegGrid','vegFilter')">
                     <option value="all">All</option>
                     <option value="daily">Daily Essentials</option>
-                    <option value="leafy">Leafy</option>
+                    <option value="leafy">Leafy Greens</option>
                     <option value="root">Root Vegetables</option>
                     <option value="exotic">Exotic</option>
                 </select>
@@ -49,84 +49,84 @@
     <section class="products-section">
         <div class="product-grid" id="vegGrid">
             <div class="product-card" data-category="daily" data-price="40" data-name="Tomato">
-                <div class="product-img" style="background:linear-gradient(135deg,#ff6b6b,#ee5a24);">🍅</div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1546470427-0d4db154ceb8?w=300&h=200&fit=crop" alt="Fresh Tomatoes"></div>
                 <span class="freshness-badge">🌿 Fresh</span>
-                <div class="product-info"><h4>Tomato</h4><p class="product-price">₹40/kg</p><button class="btn btn-cart" onclick="addToCart('Tomato 1kg',40)">Add to Cart</button></div>
+                <div class="product-info"><h4>Tomato (Tamatar)</h4><p class="product-price">₹40/kg</p><button class="btn btn-cart" onclick="addToCart('Tomato 1kg',40)">Add to Cart</button></div>
             </div>
             <div class="product-card" data-category="root" data-price="30" data-name="Potato">
-                <div class="product-img" style="background:linear-gradient(135deg,#dfa579,#c97d4f);">🥔</div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1518977676601-b53f82ber630?w=300&h=200&fit=crop" alt="Potatoes" onerror="this.src='https://images.unsplash.com/photo-1590165482129-1b8b27698780?w=300&h=200&fit=crop'"></div>
                 <span class="freshness-badge">🌿 Fresh</span>
-                <div class="product-info"><h4>Potato</h4><p class="product-price">₹30/kg</p><button class="btn btn-cart" onclick="addToCart('Potato 1kg',30)">Add to Cart</button></div>
+                <div class="product-info"><h4>Potato (Aloo)</h4><p class="product-price">₹30/kg</p><button class="btn btn-cart" onclick="addToCart('Potato 1kg',30)">Add to Cart</button></div>
             </div>
             <div class="product-card" data-category="daily" data-price="35" data-name="Onion">
-                <div class="product-img" style="background:linear-gradient(135deg,#d4a5a5,#a8577e);">🧅</div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=300&h=200&fit=crop" alt="Onions"></div>
                 <span class="freshness-badge">🌿 Fresh</span>
-                <div class="product-info"><h4>Onion</h4><p class="product-price">₹35/kg</p><button class="btn btn-cart" onclick="addToCart('Onion 1kg',35)">Add to Cart</button></div>
+                <div class="product-info"><h4>Onion (Pyaaz)</h4><p class="product-price">₹35/kg</p><button class="btn btn-cart" onclick="addToCart('Onion 1kg',35)">Add to Cart</button></div>
             </div>
             <div class="product-card" data-category="root" data-price="45" data-name="Carrot">
-                <div class="product-img" style="background:linear-gradient(135deg,#f39c12,#e67e22);">🥕</div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=300&h=200&fit=crop" alt="Carrots"></div>
                 <span class="freshness-badge">🌿 Fresh</span>
-                <div class="product-info"><h4>Carrot</h4><p class="product-price">₹45/kg</p><button class="btn btn-cart" onclick="addToCart('Carrot 1kg',45)">Add to Cart</button></div>
+                <div class="product-info"><h4>Carrot (Gajar)</h4><p class="product-price">₹45/kg</p><button class="btn btn-cart" onclick="addToCart('Carrot 1kg',45)">Add to Cart</button></div>
             </div>
             <div class="product-card" data-category="daily" data-price="60" data-name="Capsicum">
-                <div class="product-img" style="background:linear-gradient(135deg,#27ae60,#2ecc71);">🫑</div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=300&h=200&fit=crop" alt="Capsicum"></div>
                 <span class="freshness-badge">🌿 Fresh</span>
-                <div class="product-info"><h4>Capsicum</h4><p class="product-price">₹60/kg</p><button class="btn btn-cart" onclick="addToCart('Capsicum 1kg',60)">Add to Cart</button></div>
+                <div class="product-info"><h4>Capsicum (Shimla Mirch)</h4><p class="product-price">₹60/kg</p><button class="btn btn-cart" onclick="addToCart('Capsicum 1kg',60)">Add to Cart</button></div>
             </div>
             <div class="product-card" data-category="exotic" data-price="80" data-name="Broccoli">
-                <div class="product-img" style="background:linear-gradient(135deg,#56ab2f,#a8e063);">🥦</div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=300&h=200&fit=crop" alt="Broccoli"></div>
                 <span class="freshness-badge">🌿 Premium</span>
                 <div class="product-info"><h4>Broccoli</h4><p class="product-price">₹80/kg</p><button class="btn btn-cart" onclick="addToCart('Broccoli 1kg',80)">Add to Cart</button></div>
             </div>
             <div class="product-card" data-category="leafy" data-price="25" data-name="Spinach">
-                <div class="product-img" style="background:linear-gradient(135deg,#11998e,#38ef7d);">🥬</div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=300&h=200&fit=crop" alt="Spinach"></div>
                 <span class="freshness-badge">🌿 Fresh</span>
-                <div class="product-info"><h4>Spinach</h4><p class="product-price">₹25/bunch</p><button class="btn btn-cart" onclick="addToCart('Spinach',25)">Add to Cart</button></div>
+                <div class="product-info"><h4>Spinach (Palak)</h4><p class="product-price">₹25/bunch</p><button class="btn btn-cart" onclick="addToCart('Spinach',25)">Add to Cart</button></div>
             </div>
             <div class="product-card" data-category="daily" data-price="50" data-name="Cauliflower">
-                <div class="product-img" style="background:linear-gradient(135deg,#dfe6e9,#b2bec3);">🥬</div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=300&h=200&fit=crop" alt="Cauliflower" onerror="this.src='https://images.unsplash.com/photo-1613743983303-b3e89f8a2b80?w=300&h=200&fit=crop'"></div>
                 <span class="freshness-badge">🌿 Fresh</span>
-                <div class="product-info"><h4>Cauliflower</h4><p class="product-price">₹50/piece</p><button class="btn btn-cart" onclick="addToCart('Cauliflower',50)">Add to Cart</button></div>
+                <div class="product-info"><h4>Cauliflower (Gobhi)</h4><p class="product-price">₹50/piece</p><button class="btn btn-cart" onclick="addToCart('Cauliflower',50)">Add to Cart</button></div>
             </div>
             <div class="product-card" data-category="daily" data-price="55" data-name="Green Peas">
-                <div class="product-img" style="background:linear-gradient(135deg,#b8e994,#78e08f);">🟢</div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1587735243615-c03f25aaff15?w=300&h=200&fit=crop" alt="Green Peas"></div>
                 <span class="freshness-badge">🌿 Fresh</span>
-                <div class="product-info"><h4>Green Peas</h4><p class="product-price">₹55/kg</p><button class="btn btn-cart" onclick="addToCart('Green Peas 1kg',55)">Add to Cart</button></div>
+                <div class="product-info"><h4>Green Peas (Matar)</h4><p class="product-price">₹55/kg</p><button class="btn btn-cart" onclick="addToCart('Green Peas 1kg',55)">Add to Cart</button></div>
             </div>
             <div class="product-card" data-category="daily" data-price="45" data-name="Beans">
-                <div class="product-img" style="background:linear-gradient(135deg,#38ada9,#079992);">🫛</div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1567375698348-5d9d5ae10c3a?w=300&h=200&fit=crop" alt="French Beans"></div>
                 <span class="freshness-badge">🌿 Fresh</span>
                 <div class="product-info"><h4>French Beans</h4><p class="product-price">₹45/kg</p><button class="btn btn-cart" onclick="addToCart('French Beans 1kg',45)">Add to Cart</button></div>
             </div>
             <div class="product-card" data-category="leafy" data-price="30" data-name="Cabbage">
-                <div class="product-img" style="background:linear-gradient(135deg,#a3cb38,#009432);">🥬</div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1594282486756-576bf8f1e5d1?w=300&h=200&fit=crop" alt="Cabbage"></div>
                 <span class="freshness-badge">🌿 Fresh</span>
-                <div class="product-info"><h4>Cabbage</h4><p class="product-price">₹30/piece</p><button class="btn btn-cart" onclick="addToCart('Cabbage',30)">Add to Cart</button></div>
+                <div class="product-info"><h4>Cabbage (Patta Gobhi)</h4><p class="product-price">₹30/piece</p><button class="btn btn-cart" onclick="addToCart('Cabbage',30)">Add to Cart</button></div>
             </div>
             <div class="product-card" data-category="daily" data-price="25" data-name="Cucumber">
-                <div class="product-img" style="background:linear-gradient(135deg,#7bed9f,#2ed573);">🥒</div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=300&h=200&fit=crop" alt="Cucumber"></div>
                 <span class="freshness-badge">🌿 Fresh</span>
-                <div class="product-info"><h4>Cucumber</h4><p class="product-price">₹25/kg</p><button class="btn btn-cart" onclick="addToCart('Cucumber 1kg',25)">Add to Cart</button></div>
+                <div class="product-info"><h4>Cucumber (Kheera)</h4><p class="product-price">₹25/kg</p><button class="btn btn-cart" onclick="addToCart('Cucumber 1kg',25)">Add to Cart</button></div>
             </div>
             <div class="product-card" data-category="exotic" data-price="120" data-name="Mushroom">
-                <div class="product-img" style="background:linear-gradient(135deg,#d2dae2,#808e9b);">🍄</div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1504545102780-26774c1bb073?w=300&h=200&fit=crop" alt="Mushroom"></div>
                 <span class="freshness-badge">🌿 Premium</span>
                 <div class="product-info"><h4>Button Mushroom</h4><p class="product-price">₹120/pack</p><button class="btn btn-cart" onclick="addToCart('Mushroom',120)">Add to Cart</button></div>
             </div>
             <div class="product-card" data-category="exotic" data-price="35" data-name="Corn">
-                <div class="product-img" style="background:linear-gradient(135deg,#f9ca24,#f0932b);">🌽</div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=300&h=200&fit=crop" alt="Sweet Corn"></div>
                 <span class="freshness-badge">🌿 Fresh</span>
-                <div class="product-info"><h4>Sweet Corn</h4><p class="product-price">₹35/piece</p><button class="btn btn-cart" onclick="addToCart('Sweet Corn',35)">Add to Cart</button></div>
+                <div class="product-info"><h4>Sweet Corn (Bhutta)</h4><p class="product-price">₹35/piece</p><button class="btn btn-cart" onclick="addToCart('Sweet Corn',35)">Add to Cart</button></div>
             </div>
             <div class="product-card" data-category="root" data-price="90" data-name="Ginger">
-                <div class="product-img" style="background:linear-gradient(135deg,#c8a415,#e1b12c);">🫚</div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=300&h=200&fit=crop" alt="Ginger"></div>
                 <span class="freshness-badge">🌿 Fresh</span>
-                <div class="product-info"><h4>Ginger</h4><p class="product-price">₹90/kg</p><button class="btn btn-cart" onclick="addToCart('Ginger 1kg',90)">Add to Cart</button></div>
+                <div class="product-info"><h4>Ginger (Adrak)</h4><p class="product-price">₹90/kg</p><button class="btn btn-cart" onclick="addToCart('Ginger 1kg',90)">Add to Cart</button></div>
             </div>
             <div class="product-card" data-category="root" data-price="70" data-name="Garlic">
-                <div class="product-img" style="background:linear-gradient(135deg,#ffeaa7,#fdcb6e);">🧄</div>
+                <div class="product-img"><img src="https://images.unsplash.com/photo-1540148426945-6cf22a6b2571?w=300&h=200&fit=crop" alt="Garlic"></div>
                 <span class="freshness-badge">🌿 Fresh</span>
-                <div class="product-info"><h4>Garlic</h4><p class="product-price">₹70/kg</p><button class="btn btn-cart" onclick="addToCart('Garlic 1kg',70)">Add to Cart</button></div>
+                <div class="product-info"><h4>Garlic (Lehsun)</h4><p class="product-price">₹70/kg</p><button class="btn btn-cart" onclick="addToCart('Garlic 1kg',70)">Add to Cart</button></div>
             </div>
         </div>
     </section>
