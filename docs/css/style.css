@@ -1006,6 +1006,61 @@ img { display: block; max-width: 100%; }
   padding: 0 16px;
 }
 
+/* Location & Map */
+.location-section {
+  margin: 1rem 0;
+}
+
+.detect-location-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem 1.25rem;
+  background: linear-gradient(135deg, #7C3AED, #6D28D9);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.detect-location-btn:hover {
+  background: linear-gradient(135deg, #6D28D9, #5B21B6);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+.detect-location-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.detect-location-btn.detected {
+  background: linear-gradient(135deg, #059669, #047857);
+}
+
+.checkout-map {
+  display: none;
+  width: 100%;
+  height: 250px;
+  border-radius: 12px;
+  margin-top: 0.75rem;
+  border: 2px solid #E5E7EB;
+  z-index: 1;
+}
+
+.location-hint {
+  font-size: 0.75rem;
+  color: #6B7280;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
 .input-with-icon input {
   border: 0;
   box-shadow: none;

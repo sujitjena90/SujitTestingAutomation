@@ -447,6 +447,7 @@
       })) : [],
       totalAmount: Number(orderData.totalAmount || orderData.summary?.totalAmount || 0),
       address: orderData.address,
+      location: orderData.location || (typeof window.getOrderLocation === 'function' ? window.getOrderLocation() : null),
       paymentMethod: orderData.paymentMethod,
       status: orderData.status || 'confirmed',
       createdAt: window.firebase.firestore.FieldValue.serverTimestamp()

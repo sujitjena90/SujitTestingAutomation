@@ -474,6 +474,13 @@ function hydrateCheckout(summary, address) {
           <input id="pinCode" type="text" placeholder="6 digit PIN" maxlength="6" value="${escapeAttr(address.pinCode || '')}">
         </label>
       </div>
+      <div class="location-section">
+        <button type="button" class="detect-location-btn" onclick="detectLocation()">
+          📍 Detect My Location
+        </button>
+        <div id="checkoutMap" class="checkout-map"></div>
+        <p class="location-hint">We'll deliver to this pinned location</p>
+      </div>
       <button class="secondary-btn" id="saveAddressBtn" type="button">Save Address</button>
 
       <section class="payment-panel-wrap">
@@ -691,6 +698,7 @@ function processPayment(method, summary) {
     items,
     summary,
     address: addressState.address,
+    location: typeof window.getOrderLocation === 'function' ? window.getOrderLocation() : null,
     paymentMethod: getPaymentLabel(method),
     placedAt: new Date().toISOString(),
     etaText: 'Your order will be delivered in 10-15 minutes',
