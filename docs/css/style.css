@@ -1712,7 +1712,15 @@ img { display: block; max-width: 100%; }
 /* Firebase Auth Integration */
 .auth-page {
   min-height: 100vh;
-  background: linear-gradient(180deg, #f5edff 0%, #faf7ff 52%, #ffffff 100%);
+  background: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1920&h=1080&fit=crop') center/cover no-repeat fixed;
+  position: relative;
+}
+.auth-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(76,29,149,0.55) 0%, rgba(124,58,237,0.3) 40%, rgba(255,255,255,0.2) 100%);
+  backdrop-filter: blur(2px);
 }
 
 .auth-layout {
@@ -1720,6 +1728,8 @@ img { display: block; max-width: 100%; }
   display: grid;
   place-items: center;
   padding: 24px;
+  position: relative;
+  z-index: 1;
 }
 
 .auth-card {
