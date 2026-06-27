@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initGlobalSearch();
   initLocationChip();
   bindSoonLinks();
+  initSeasonalHero();
 
   const page = document.body.dataset.page;
   if (page === 'home') {
@@ -153,6 +154,47 @@ function updateLocationChip(chip, city, area) {
   const display = area ? `${area}, ${city}` : city;
   spans[1].textContent = display.length > 25 ? `${display.substring(0, 22)}...` : display;
   chip.classList.add('location-detected');
+}
+
+function initSeasonalHero() {
+  const hero = document.querySelector('.seasonal-hero');
+  const slides = document.querySelectorAll('.season-slide');
+  const dots = document.querySelectorAll('.season-dot');
+  if (!hero || slides.length === 0 || dots.length === 0) return;
+
+  let current = 0;
+  let interval;
+
+  function showSlide(index) {
+    slides.forEach((slide) => slide.classList.remove('active'));
+    dots.forEach((dot) => dot.classList.remove('active'));
+
+    slides[index].classList.add('active');
+    dots[index].classList.add('active');
+    current = index;
+  }
+
+  function nextSlide() {
+    showSlide((current + 1) % slides.length);
+  }
+
+  function startAutoPlay() {
+    clearInterval(interval);
+    interval = setInterval(nextSlide, 8000);
+  }
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      showSlide(index);
+      startAutoPlay();
+    });
+  });
+
+  hero.addEventListener('mouseenter', () => clearInterval(interval));
+  hero.addEventListener('mouseleave', startAutoPlay);
+
+  showSlide(0);
+  startAutoPlay();
 }
 
 function initGlobalSearch() {
