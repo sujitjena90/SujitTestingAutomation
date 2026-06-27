@@ -351,6 +351,7 @@ function renderCartPage() {
 }
 
 function renderSummaryMarkup(summary, withCheckoutButton = false) {
+  const checkoutHref = window.SJAuth?.getCheckoutHref?.() || 'checkout.html';
   return `
     <div class="summary-card">
       <h3>Bill details</h3>
@@ -360,7 +361,7 @@ function renderSummaryMarkup(summary, withCheckoutButton = false) {
       ${summary.discount ? `<div class="summary-row summary-row--discount"><span>Discount</span><strong>- ${formatCurrency(summary.discount)}</strong></div>` : ''}
       <div class="summary-divider"></div>
       <div class="summary-row summary-row--total"><span>Total Amount</span><strong>${formatCurrency(summary.totalAmount)}</strong></div>
-      ${withCheckoutButton ? `<a class="primary-btn primary-btn--full" href="checkout.html">Proceed to Checkout</a>` : ''}
+      ${withCheckoutButton ? `<a class="primary-btn primary-btn--full" href="${escapeAttr(checkoutHref)}">Proceed to Checkout</a>` : ''}
     </div>
   `;
 }
@@ -403,6 +404,17 @@ function renderCheckoutPage() {
   }
 
   const summary = getCartSummary(items);
+  if (window.SJAuth?.shouldBlockCheckout?.()) {
+    window.SJAuth.renderCheckoutAuthNotice({
+      items,
+      summary,
+      content,
+      summaryNode,
+      renderSummaryMarkup
+    });
+    return;
+  }
+
   summaryNode.innerHTML = `
     <div class="summary-card">
       <h3>Order Summary</h3>
@@ -423,6 +435,7 @@ function renderCheckoutPage() {
   `;
 
   hydrateCheckout(summary, address);
+  window.SJAuth?.prefillCheckoutForm?.();
 }
 
 function hydrateCheckout(summary, address) {
@@ -681,14 +694,21 @@ function processPayment(method, summary) {
     paymentMethod: getPaymentLabel(method),
     placedAt: new Date().toISOString(),
     etaText: 'Your order will be delivered in 10-15 minutes',
+    status: 'confirmed'
   };
 
   const overlay = document.getElementById('paymentLoader');
   overlay?.classList.add('is-visible');
-  window.setTimeout(() => {
-    localStorage.setItem(APP.orderKey, JSON.stringify(order));
-    clearCart();
-    window.location.href = 'order-success.html';
+  window.setTimeout(async () => {
+    try {
+      const finalOrder = await Promise.resolve(window.SJAuth?.handleOrderPlacement?.(order) || order);
+      localStorage.setItem(APP.orderKey, JSON.stringify(finalOrder));
+      clearCart();
+      window.location.href = 'order-success.html';
+    } catch (error) {
+      overlay?.classList.remove('is-visible');
+      showToast(error?.message || 'Unable to place order right now. Please try again.');
+    }
   }, 2400);
 }
 
@@ -722,6 +742,7 @@ function renderSuccessPage() {
       </div>
     `;
   }
+  window.SJAuth?.enhanceSuccessPage?.(order);
 }
 
 function getSavedAddress() {

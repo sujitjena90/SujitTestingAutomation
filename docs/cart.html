@@ -25,9 +25,9 @@
         <input id="siteSearch" type="search" placeholder="Search for products...">
       </label>
       <div class="top-actions">
-        <button class="icon-action" type="button" aria-label="Login">
-          <span>👤</span><span>Login</span>
-        </button>
+        <a class="icon-action auth-action" href="login.html" aria-label="Login">
+          <span>👤</span><span class="auth-label">Login</span>
+        </a>
         <a class="icon-action cart-action" href="cart.html" aria-label="Cart">
           <span>🛒</span><span>Cart</span><span class="cart-count">0</span>
         </a>
@@ -76,6 +76,12 @@
     </div>
   </footer>
   <div class="toast" id="toast" aria-live="polite"></div>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/auth.js"></script>
   <script src="js/script.js"></script>
 </body>
 </html>
+

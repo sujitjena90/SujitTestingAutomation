@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile | SJ MegaMart</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="profile" data-tab="all">
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a class="brand" href="index.html" aria-label="SJ MegaMart home">
+        <span class="brand__mark">SJ MegaMart</span>
+        <span class="brand__sub">by Sujit Jena · Bhubaneswar, India</span>
+      </a>
+      <button class="location-chip" type="button" aria-label="Select Location">
+        <span>📍</span><span>Select Location</span><span>▾</span>
+      </button>
+      <label class="searchbar" aria-label="Search products">
+        <span class="searchbar__icon">🔎</span>
+        <input id="siteSearch" type="search" placeholder="Search for products...">
+      </label>
+      <div class="top-actions">
+        <a class="icon-action auth-action" href="login.html" aria-label="Login">
+          <span>👤</span><span class="auth-label">Login</span>
+        </a>
+        <a class="icon-action cart-action" href="cart.html" aria-label="Cart">
+          <span>🛒</span><span>Cart</span><span class="cart-count">0</span>
+        </a>
+      </div>
+    </div>
+    <nav class="tabs-bar" aria-label="Shop categories">
+      <div class="tabs-bar__inner">
+        <a class="category-tab" data-tab="all" href="index.html"><span>✨</span><span>All</span></a>
+        <a class="category-tab" data-tab="grocery" href="grocery.html"><span>🛒</span><span>Grocery</span></a>
+        <a class="category-tab" data-tab="vegetables" href="vegetables.html"><span>🥬</span><span>Fresh Veggies</span></a>
+        <a class="category-tab" data-tab="fresh" href="fresh.html"><span>🍗</span><span>Meat & Fish</span></a>
+        <a class="category-tab" data-tab="fashion" href="fashion.html"><span>👗</span><span>Fashion</span></a>
+        <a class="category-tab" data-tab="electronics" href="electronics.html"><span>📱</span><span>Electronics</span></a>
+        <a class="category-tab" data-tab="home" href="home.html"><span>🏠</span><span>Home</span></a>
+        <a class="category-tab" data-tab="beauty" href="beauty.html"><span>💄</span><span>Beauty</span></a>
+        <a class="category-tab" data-tab="toys" href="toys.html"><span>🧸</span><span>Toys</span></a>
+      </div>
+    </nav>
+  </header>
+  <main class="page-wrap">
+    <section class="profile-shell">
+      <div class="profile-grid">
+        <section class="profile-card profile-card--hero">
+          <div class="profile-hero">
+            <div class="profile-avatar" id="profileAvatar">S</div>
+            <div>
+              <h1>My Profile</h1>
+              <p>Manage your account details, saved addresses and order history.</p>
+            </div>
+          </div>
+          <div class="form-grid profile-form-grid">
+            <label class="form-field">
+              <span>Name</span>
+              <input id="profileName" type="text" placeholder="Your name">
+            </label>
+            <label class="form-field">
+              <span>Email</span>
+              <input id="profileEmail" type="email" readonly>
+            </label>
+            <label class="form-field">
+              <span>Phone</span>
+              <input id="profilePhone" type="tel" maxlength="10" placeholder="10 digit mobile number">
+            </label>
+          </div>
+          <div class="profile-actions-row">
+            <button class="primary-btn" id="saveProfileBtn" type="button">Save Changes</button>
+            <span class="profile-inline-message" id="profileMessage" aria-live="polite"></span>
+          </div>
+        </section>
+        <section class="profile-card">
+          <div class="profile-section-heading">
+            <div>
+              <h2>Saved Addresses</h2>
+              <p>Use a default address for faster checkout.</p>
+            </div>
+            <button class="secondary-btn" id="addAddressBtn" type="button">Add New Address</button>
+          </div>
+          <div class="address-editor" id="addressEditor" hidden>
+            <input id="addressId" type="hidden">
+            <div class="form-grid">
+              <label class="form-field">
+                <span>Name</span>
+                <input id="addressName" type="text" placeholder="Recipient name">
+              </label>
+              <label class="form-field">
+                <span>Phone</span>
+                <input id="addressPhone" type="tel" maxlength="10" placeholder="10 digit mobile number">
+              </label>
+              <label class="form-field form-field--full">
+                <span>Address</span>
+                <textarea id="addressLineField" rows="3" placeholder="House no, street, landmark"></textarea>
+              </label>
+              <label class="form-field">
+                <span>City</span>
+                <input id="addressCity" type="text" placeholder="City">
+              </label>
+              <label class="form-field">
+                <span>State</span>
+                <input id="addressState" type="text" placeholder="State">
+              </label>
+              <label class="form-field">
+                <span>PIN</span>
+                <input id="addressPin" type="text" maxlength="6" placeholder="6 digit PIN">
+              </label>
+            </div>
+            <label class="checkbox-field">
+              <input id="addressDefault" type="checkbox">
+              <span>Set as default address</span>
+            </label>
+            <div class="profile-actions-row">
+              <button class="primary-btn" id="saveAddressProfileBtn" type="button">Save Address</button>
+              <button class="secondary-btn" id="cancelAddressBtn" type="button">Cancel</button>
+              <span class="profile-inline-message" id="addressMessage" aria-live="polite"></span>
+            </div>
+          </div>
+          <div class="address-list" id="addressList"></div>
+        </section>
+        <section class="profile-card">
+          <div class="profile-section-heading">
+            <div>
+              <h2>Order History</h2>
+              <p>Your confirmed SJ MegaMart orders will appear here.</p>
+            </div>
+          </div>
+          <div class="order-history-list" id="orderHistoryList"></div>
+        </section>
+      </div>
+      <button class="logout-btn" id="logoutBtn" type="button">Logout</button>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">SJ MegaMart</div>
+      <div class="footer__links">
+        <a href="index.html#discover">About</a>
+        <a href="index.html#discover">Contact</a>
+        <a href="index.html#discover">Terms</a>
+        <a href="index.html#discover">Privacy</a>
+      </div>
+      <div class="footer__copy">© 2024 SJ MegaMart by Sujit Jena. All Rights Reserved.</div>
+    </div>
+  </footer>
+  <div class="toast" id="toast" aria-live="polite"></div>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  <script src="js/firebase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
