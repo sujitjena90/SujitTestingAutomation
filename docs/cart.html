@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Cart | SJ MegaMart</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="cart" data-tab="all">
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a class="brand" href="index.html" aria-label="SJ MegaMart home">
+        <span class="brand__mark">SJ MegaMart</span>
+        <span class="brand__sub">by Sujit Jena · Bhubaneswar, India</span>
+      </a>
+      <button class="location-chip" type="button" aria-label="Select Location">
+        <span>📍</span><span>Select Location</span><span>▾</span>
+      </button>
+      <label class="searchbar" aria-label="Search products">
+        <span class="searchbar__icon">🔎</span>
+        <input id="siteSearch" type="search" placeholder="Search for products...">
+      </label>
+      <div class="top-actions">
+        <button class="icon-action" type="button" aria-label="Login">
+          <span>👤</span><span>Login</span>
+        </button>
+        <a class="icon-action cart-action" href="cart.html" aria-label="Cart">
+          <span>🛒</span><span>Cart</span><span class="cart-count">0</span>
+        </a>
+      </div>
+    </div>
+    <nav class="tabs-bar" aria-label="Shop categories">
+      <div class="tabs-bar__inner">
+        <a class="category-tab" data-tab="all" href="index.html"><span>✨</span><span>All</span></a>
+        <a class="category-tab" data-tab="grocery" href="grocery.html"><span>🛒</span><span>Grocery</span></a>
+        <a class="category-tab" data-tab="vegetables" href="vegetables.html"><span>🥬</span><span>Fresh Veggies</span></a>
+        <a class="category-tab" data-tab="fresh" href="fresh.html"><span>🍗</span><span>Meat & Fish</span></a>
+        <a class="category-tab" data-tab="fashion" href="fashion.html"><span>👗</span><span>Fashion</span></a>
+        <a class="category-tab" data-tab="electronics" href="electronics.html"><span>📱</span><span>Electronics</span></a>
+        <a class="category-tab" data-tab="home" href="home.html"><span>🏠</span><span>Home</span></a>
+        <a class="category-tab" data-tab="beauty" href="beauty.html"><span>💄</span><span>Beauty</span></a>
+        <a class="category-tab" data-tab="toys" href="toys.html"><span>🧸</span><span>Toys</span></a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page-wrap">
+    <section class="cart-shell">
+      <div class="page-card">
+        <div class="page-heading">
+          <div>
+            <h1>My Cart</h1>
+            <p id="cartItemCount">0 items</p>
+          </div>
+        </div>
+        <div class="cart-items-list" id="cartItemsList"></div>
+      </div>
+      <aside id="cartSummary"></aside>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">SJ MegaMart</div>
+      <div class="footer__links">
+        <a href="index.html#discover">About</a>
+        <a href="index.html#discover">Contact</a>
+        <a href="index.html#discover">Terms</a>
+        <a href="index.html#discover">Privacy</a>
+      </div>
+      <div class="footer__copy">© 2024 SJ MegaMart by Sujit Jena. All Rights Reserved.</div>
+    </div>
+  </footer>
+  <div class="toast" id="toast" aria-live="polite"></div>
+  <script src="js/script.js"></script>
+</body>
+</html>
