@@ -1,12 +1,13 @@
 // Firebase Configuration
 // Replace these values with your Firebase project config
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyBMcKfg5OLlL4S5skZ4ruPRsnQFGAVBtr8",
+  authDomain: "sj-megamart.firebaseapp.com",
+  projectId: "sj-megamart",
+  storageBucket: "sj-megamart.firebasestorage.app",
+  messagingSenderId: "180762164279",
+  appId: "1:180762164279:web:ab4e1340e32f4faa5413b2",
+  measurementId: "G-7Z7BN1CZ6B"
 };
 
 (function initializeFirebase() {
