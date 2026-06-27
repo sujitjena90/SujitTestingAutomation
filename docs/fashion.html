@@ -1,234 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fashion - SJ MegaMart</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo">🛒 SJ <span>MegaMart</span></a>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="grocery.html">Grocery</a></li>
-                <li><a href="vegetables.html">Vegetables</a></li>
-                <li><a href="fashion.html" class="active">Fashion</a></li>
-            </ul>
-            <div class="nav-right">
-                <div class="cart-icon" id="cartIcon">🛒 <span class="cart-count" id="cartCount">0</span></div>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Fashion & Apparel | SJ MegaMart</title>
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+          <link rel="icon" href="data:,">
+          <link rel="stylesheet" href="css/style.css">
+        </head>
+        <body data-page="fashion" data-tab="fashion">
+          <header class="topbar">
+            <div class="topbar__inner">
+              <a class="brand" href="index.html" aria-label="SJ MegaMart home">
+                <span class="brand__mark">SJ MegaMart</span>
+                <span class="brand__sub">by Sujit Jena · Bhubaneswar, India</span>
+              </a>
+              <button class="location-chip" type="button" aria-label="Select Location">
+                <span>📍</span><span>Select Location</span><span>▾</span>
+              </button>
+              <label class="searchbar" aria-label="Search products">
+                <span class="searchbar__icon">🔎</span>
+                <input id="siteSearch" type="search" placeholder="Search for products...">
+              </label>
+              <div class="top-actions">
+                <button class="icon-action" type="button" aria-label="Login">
+                  <span>👤</span><span>Login</span>
+                </button>
+                <a class="icon-action cart-action" href="javascript:void(0)" aria-label="Cart">
+                  <span>🛒</span><span>Cart</span><span class="cart-count">0</span>
+                </a>
+              </div>
             </div>
-        </div>
-    </nav>
-
-    <section class="page-header fashion-header">
-        <h1>👗 Fashion Store</h1>
-        <p>Latest trends for Men, Women, Boys & Girls — Indian styles at best prices</p>
-    </section>
-
-    <section class="filter-bar">
-        <div class="filter-container">
-            <div class="filter-buttons">
-                <button class="filter-btn active" onclick="filterFashion('all')">All</button>
-                <button class="filter-btn" onclick="filterFashion('men')">👔 Men</button>
-                <button class="filter-btn" onclick="filterFashion('women')">👗 Women</button>
-                <button class="filter-btn" onclick="filterFashion('boys')">👦 Boys</button>
-                <button class="filter-btn" onclick="filterFashion('girls')">👧 Girls</button>
+            <nav class="tabs-bar" aria-label="Shop categories">
+              <div class="tabs-bar__inner">
+                <a class="category-tab" data-tab="all" href="index.html"><span>✨</span><span>All</span></a>
+<a class="category-tab" data-tab="grocery" href="grocery.html"><span>🛒</span><span>Grocery</span></a>
+<a class="category-tab" data-tab="vegetables" href="vegetables.html"><span>🥬</span><span>Vegetables</span></a>
+<a class="category-tab" data-tab="fashion" href="fashion.html"><span>👗</span><span>Fashion</span></a>
+<a class="category-tab" data-tab="electronics" href="index.html#discover" data-soon="true"><span>📱</span><span>Electronics</span></a>
+<a class="category-tab" data-tab="home" href="index.html#discover" data-soon="true"><span>🏠</span><span>Home</span></a>
+<a class="category-tab" data-tab="beauty" href="index.html#discover" data-soon="true"><span>💄</span><span>Beauty</span></a>
+<a class="category-tab" data-tab="toys" href="index.html#discover" data-soon="true"><span>🧸</span><span>Toys</span></a>
+              </div>
+            </nav>
+          </header>
+          <main class="page-wrap">
+            <section class="listing-shell"><div class="listing-hero" id="listingHero"></div><div class="filter-bar" id="filterBar"></div><div class="product-grid" id="productGrid"></div></section>
+          </main>
+          <footer class="footer">
+            <div class="footer__inner">
+              <div class="footer__brand">SJ MegaMart</div>
+              <div class="footer__links">
+                <a href="index.html#discover">About</a>
+                <a href="index.html#discover">Contact</a>
+                <a href="index.html#discover">Terms</a>
+                <a href="index.html#discover">Privacy</a>
+              </div>
+              <div class="footer__copy">© 2024 SJ MegaMart by Sujit Jena. All Rights Reserved.</div>
             </div>
-            <div class="filter-group">
-                <label>Sort:</label>
-                <select id="fashionSort" onchange="sortProducts('fashionGrid')">
-                    <option value="default">Default</option>
-                    <option value="low-high">Price: Low to High</option>
-                    <option value="high-low">Price: High to Low</option>
-                    <option value="name">Name: A-Z</option>
-                </select>
-            </div>
-        </div>
-    </section>
-
-    <section class="products-section">
-        <div class="product-grid" id="fashionGrid">
-            <!-- Men -->
-            <div class="product-card" data-category="men" data-price="1299" data-name="Formal Shirt">
-                <div class="product-img"><img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=300&h=200&fit=crop" alt="Formal Shirt"></div>
-                <div class="product-info">
-                    <span class="product-tag tag-men">Men</span>
-                    <h4>Formal Shirt</h4>
-                    <p class="size-options">S | M | L | XL</p>
-                    <p class="product-price">₹1,299</p>
-                    <button class="btn btn-cart" onclick="addToCart('Formal Shirt',1299)">Add to Cart</button>
-                </div>
-            </div>
-            <div class="product-card" data-category="men" data-price="799" data-name="Casual T-Shirt">
-                <div class="product-img"><img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=300&h=200&fit=crop" alt="T-Shirt"></div>
-                <div class="product-info">
-                    <span class="product-tag tag-men">Men</span>
-                    <h4>Casual T-Shirt</h4>
-                    <p class="size-options">S | M | L | XL | XXL</p>
-                    <p class="product-price">₹799</p>
-                    <button class="btn btn-cart" onclick="addToCart('Casual T-Shirt',799)">Add to Cart</button>
-                </div>
-            </div>
-            <div class="product-card" data-category="men" data-price="1599" data-name="Slim Fit Jeans">
-                <div class="product-img"><img src="https://images.unsplash.com/photo-1542272604-787c3835535d?w=300&h=200&fit=crop" alt="Jeans"></div>
-                <div class="product-info">
-                    <span class="product-tag tag-men">Men</span>
-                    <h4>Slim Fit Jeans</h4>
-                    <p class="size-options">28 | 30 | 32 | 34 | 36</p>
-                    <p class="product-price">₹1,599</p>
-                    <button class="btn btn-cart" onclick="addToCart('Slim Fit Jeans',1599)">Add to Cart</button>
-                </div>
-            </div>
-            <div class="product-card" data-category="men" data-price="3499" data-name="Blazer">
-                <div class="product-img"><img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=300&h=200&fit=crop" alt="Blazer"></div>
-                <div class="product-info">
-                    <span class="product-tag tag-men">Men</span>
-                    <h4>Premium Blazer</h4>
-                    <p class="size-options">M | L | XL | XXL</p>
-                    <p class="product-price">₹3,499</p>
-                    <button class="btn btn-cart" onclick="addToCart('Premium Blazer',3499)">Add to Cart</button>
-                </div>
-            </div>
-            <!-- Women -->
-            <div class="product-card" data-category="women" data-price="2499" data-name="Silk Saree">
-                <div class="product-img"><img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=300&h=200&fit=crop" alt="Saree"></div>
-                <div class="product-info">
-                    <span class="product-tag tag-women">Women</span>
-                    <h4>Silk Saree</h4>
-                    <p class="size-options">Free Size</p>
-                    <p class="product-price">₹2,499</p>
-                    <button class="btn btn-cart" onclick="addToCart('Silk Saree',2499)">Add to Cart</button>
-                </div>
-            </div>
-            <div class="product-card" data-category="women" data-price="899" data-name="Cotton Kurti">
-                <div class="product-img"><img src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=300&h=200&fit=crop" alt="Kurti"></div>
-                <div class="product-info">
-                    <span class="product-tag tag-women">Women</span>
-                    <h4>Cotton Kurti</h4>
-                    <p class="size-options">S | M | L | XL | XXL</p>
-                    <p class="product-price">₹899</p>
-                    <button class="btn btn-cart" onclick="addToCart('Cotton Kurti',899)">Add to Cart</button>
-                </div>
-            </div>
-            <div class="product-card" data-category="women" data-price="1799" data-name="Summer Dress">
-                <div class="product-img"><img src="https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=300&h=200&fit=crop" alt="Summer Dress"></div>
-                <div class="product-info">
-                    <span class="product-tag tag-women">Women</span>
-                    <h4>Summer Dress</h4>
-                    <p class="size-options">XS | S | M | L</p>
-                    <p class="product-price">₹1,799</p>
-                    <button class="btn btn-cart" onclick="addToCart('Summer Dress',1799)">Add to Cart</button>
-                </div>
-            </div>
-            <div class="product-card" data-category="women" data-price="2199" data-name="Denim Jacket">
-                <div class="product-img"><img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=300&h=200&fit=crop" alt="Women Jacket"></div>
-                <div class="product-info">
-                    <span class="product-tag tag-women">Women</span>
-                    <h4>Denim Jacket</h4>
-                    <p class="size-options">S | M | L | XL</p>
-                    <p class="product-price">₹2,199</p>
-                    <button class="btn btn-cart" onclick="addToCart('Denim Jacket',2199)">Add to Cart</button>
-                </div>
-            </div>
-            <!-- Boys -->
-            <div class="product-card" data-category="boys" data-price="499" data-name="Boys T-Shirt">
-                <div class="product-img"><img src="https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?w=300&h=200&fit=crop" alt="Boys T-Shirt"></div>
-                <div class="product-info">
-                    <span class="product-tag tag-boys">Boys</span>
-                    <h4>Printed T-Shirt</h4>
-                    <p class="size-options">4-6Y | 6-8Y | 8-10Y | 10-12Y</p>
-                    <p class="product-price">₹499</p>
-                    <button class="btn btn-cart" onclick="addToCart('Boys T-Shirt',499)">Add to Cart</button>
-                </div>
-            </div>
-            <div class="product-card" data-category="boys" data-price="399" data-name="Cargo Shorts">
-                <div class="product-img"><img src="https://images.unsplash.com/photo-1503341504253-dff4f94032d4?w=300&h=200&fit=crop" alt="Shorts"></div>
-                <div class="product-info">
-                    <span class="product-tag tag-boys">Boys</span>
-                    <h4>Cargo Shorts</h4>
-                    <p class="size-options">4-6Y | 6-8Y | 8-10Y</p>
-                    <p class="product-price">₹399</p>
-                    <button class="btn btn-cart" onclick="addToCart('Cargo Shorts',399)">Add to Cart</button>
-                </div>
-            </div>
-            <div class="product-card" data-category="boys" data-price="1299" data-name="School Uniform">
-                <div class="product-img"><img src="https://images.unsplash.com/photo-1604671801908-6f0c6a092c05?w=300&h=200&fit=crop" alt="School Uniform"></div>
-                <div class="product-info">
-                    <span class="product-tag tag-boys">Boys</span>
-                    <h4>School Uniform Set</h4>
-                    <p class="size-options">6-8Y | 8-10Y | 10-12Y | 12-14Y</p>
-                    <p class="product-price">₹1,299</p>
-                    <button class="btn btn-cart" onclick="addToCart('School Uniform',1299)">Add to Cart</button>
-                </div>
-            </div>
-            <div class="product-card" data-category="boys" data-price="799" data-name="Hoodie">
-                <div class="product-img"><img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=300&h=200&fit=crop" alt="Hoodie"></div>
-                <div class="product-info">
-                    <span class="product-tag tag-boys">Boys</span>
-                    <h4>Zip Hoodie</h4>
-                    <p class="size-options">6-8Y | 8-10Y | 10-12Y</p>
-                    <p class="product-price">₹799</p>
-                    <button class="btn btn-cart" onclick="addToCart('Boys Hoodie',799)">Add to Cart</button>
-                </div>
-            </div>
-            <!-- Girls -->
-            <div class="product-card" data-category="girls" data-price="699" data-name="Floral Frock">
-                <div class="product-img"><img src="https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?w=300&h=200&fit=crop" alt="Girls Frock"></div>
-                <div class="product-info">
-                    <span class="product-tag tag-girls">Girls</span>
-                    <h4>Floral Frock</h4>
-                    <p class="size-options">3-5Y | 5-7Y | 7-9Y | 9-11Y</p>
-                    <p class="product-price">₹699</p>
-                    <button class="btn btn-cart" onclick="addToCart('Floral Frock',699)">Add to Cart</button>
-                </div>
-            </div>
-            <div class="product-card" data-category="girls" data-price="449" data-name="Leggings">
-                <div class="product-img"><img src="https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=300&h=200&fit=crop" alt="Girls Leggings"></div>
-                <div class="product-info">
-                    <span class="product-tag tag-girls">Girls</span>
-                    <h4>Printed Leggings</h4>
-                    <p class="size-options">4-6Y | 6-8Y | 8-10Y</p>
-                    <p class="product-price">₹449</p>
-                    <button class="btn btn-cart" onclick="addToCart('Girls Leggings',449)">Add to Cart</button>
-                </div>
-            </div>
-            <div class="product-card" data-category="girls" data-price="549" data-name="Casual Top">
-                <div class="product-img"><img src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?w=300&h=200&fit=crop" alt="Girls Top"></div>
-                <div class="product-info">
-                    <span class="product-tag tag-girls">Girls</span>
-                    <h4>Casual Top</h4>
-                    <p class="size-options">4-6Y | 6-8Y | 8-10Y | 10-12Y</p>
-                    <p class="product-price">₹549</p>
-                    <button class="btn btn-cart" onclick="addToCart('Girls Casual Top',549)">Add to Cart</button>
-                </div>
-            </div>
-            <div class="product-card" data-category="girls" data-price="1199" data-name="Party Dress">
-                <div class="product-img"><img src="https://images.unsplash.com/photo-1543087903-1ac2ec7aa8c5?w=300&h=200&fit=crop" alt="Party Dress"></div>
-                <div class="product-info">
-                    <span class="product-tag tag-girls">Girls</span>
-                    <h4>Party Dress</h4>
-                    <p class="size-options">5-7Y | 7-9Y | 9-11Y | 11-13Y</p>
-                    <p class="product-price">₹1,199</p>
-                    <button class="btn btn-cart" onclick="addToCart('Girls Party Dress',1199)">Add to Cart</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <div class="footer-grid">
-            <div class="footer-col"><h3>🛒 SJ MegaMart</h3><p>Your trusted marketplace by Sujit Jena.</p></div>
-            <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="grocery.html">Grocery</a></li><li><a href="vegetables.html">Vegetables</a></li><li><a href="fashion.html">Fashion</a></li></ul></div>
-            <div class="footer-col"><h4>Contact</h4><ul><li>📧 contact@sjmegamart.com</li><li>📞 +91-9876543210</li><li>📍 Bhubaneswar, India</li></ul></div>
-            <div class="footer-col"><h4>Follow Us</h4><div class="social-links"><a href="#" class="social-btn">FB</a><a href="#" class="social-btn">TW</a><a href="#" class="social-btn">IG</a><a href="#" class="social-btn">YT</a></div></div>
-        </div>
-        <div class="footer-bottom"><p>&copy; 2026 SJ MegaMart by Sujit Jena. All rights reserved.</p></div>
-    </footer>
-
-    <div class="toast" id="toast"><span id="toastMessage">Item added to cart!</span></div>
-    <script src="js/script.js"></script>
-</body>
-</html>
+          </footer>
+          <div class="toast" id="toast" aria-live="polite"></div>
+          <script src="js/script.js"></script>
+        </body>
+        </html>
