@@ -98,6 +98,10 @@ img { display: block; max-width: 100%; }
   box-shadow: var(--shadow);
   transform: translateY(-1px);
 }
+.location-chip.location-detected {
+  background: #f3e8ff;
+  border-color: #7c3aed;
+}
 
 .searchbar {
   position: relative;
@@ -130,6 +134,91 @@ img { display: block; max-width: 100%; }
   font-size: 0.97rem;
 }
 .searchbar input::placeholder { color: #8b8b8b; }
+.search-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 1000;
+  display: none;
+}
+.search-dropdown.active {
+  display: block;
+}
+.search-result {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  border-bottom: 1px solid #f3f4f6;
+  transition: background 0.15s ease;
+}
+.search-result:hover,
+.search-result:focus-visible {
+  background: #f9fafb;
+  outline: none;
+}
+.search-result:last-child {
+  border-bottom: none;
+}
+.search-result__emoji {
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+.search-result__info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.search-result__name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #1f2937;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.search-result__name mark {
+  background: linear-gradient(135deg, #fde68a, #e9d5ff);
+  color: inherit;
+  padding: 0 0.1rem;
+  border-radius: 4px;
+}
+.search-result__meta {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+.search-no-results {
+  padding: 1.5rem;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 0.85rem;
+}
+.search-category-tag {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  background: #ede9fe;
+  color: #7c3aed;
+}
 
 .top-actions {
   display: flex;
@@ -432,6 +521,10 @@ img { display: block; max-width: 100%; }
   flex-direction: column;
   height: 100%;
   padding: 12px;
+}
+.product-card--search-hit {
+  border-color: rgba(124, 58, 237, 0.5);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.14), var(--shadow-hover);
 }
 .product-card__media {
   position: relative;

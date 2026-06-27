@@ -6,6 +6,7 @@ const APP = {
   legacyCartKey: 'sjMegaMartCart',
   addressKey: 'sjDeliveryAddress',
   orderKey: 'sjLastOrder',
+  locationKey: 'sjUserLocation',
   activeFilter: 'all',
   searchText: '',
   toastTimer: null,
@@ -15,11 +16,33 @@ const ALL_PRODUCTS = Object.entries(STORE_DATA.products).flatMap(([page, items])
   items.map((item) => ({ ...item, page }))
 );
 const PRODUCT_MAP = new Map(ALL_PRODUCTS.map((item) => [item.id, item]));
+const CATEGORY_NAMES = {
+  grocery: 'Grocery',
+  vegetables: 'Fresh Veggies',
+  fashion: 'Fashion',
+  electronics: 'Electronics',
+  'home-kitchen': 'Home & Kitchen',
+  beauty: 'Beauty',
+  toys: 'Toys',
+  fresh: 'Meat & Fish',
+};
+const CATEGORY_PAGES = {
+  grocery: 'grocery.html',
+  vegetables: 'vegetables.html',
+  fashion: 'fashion.html',
+  electronics: 'electronics.html',
+  'home-kitchen': 'home.html',
+  beauty: 'beauty.html',
+  toys: 'toys.html',
+  fresh: 'fresh.html',
+};
 
 document.addEventListener('DOMContentLoaded', () => {
   markActiveTab();
   updateCartCount();
   bindSearch();
+  initGlobalSearch();
+  initLocationChip();
   bindSoonLinks();
 
   const page = document.body.dataset.page;
@@ -33,6 +56,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (page === 'cart') renderCartPage();
   if (page === 'checkout') renderCheckoutPage();
   if (page === 'order-success') renderSuccessPage();
+
+  checkSearchParam();
 });
 
 function markActiveTab() {
@@ -49,6 +74,223 @@ function bindSearch() {
     APP.searchText = event.target.value.trim().toLowerCase();
     applyFilters();
   });
+}
+
+function initLocationChip() {
+  const chip = document.querySelector('.location-chip');
+  if (!chip) return;
+
+  const savedLocation = localStorage.getItem(APP.locationKey);
+  if (savedLocation) {
+    try {
+      const parsed = JSON.parse(savedLocation);
+      if (parsed?.city) {
+        updateLocationChip(chip, parsed.city, parsed.area);
+      }
+    } catch (error) {
+      localStorage.removeItem(APP.locationKey);
+    }
+  }
+
+  chip.addEventListener('click', () => {
+    if (chip.dataset.loading === 'true') return;
+
+    const spans = chip.querySelectorAll('span');
+    const label = spans[1];
+    const originalText = label ? label.textContent : 'Select Location';
+    chip.dataset.loading = 'true';
+    if (label) label.textContent = 'Detecting...';
+
+    if (!navigator.geolocation) {
+      if (label) label.textContent = originalText;
+      chip.dataset.loading = 'false';
+      alert('Geolocation not supported');
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        try {
+          const response = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.coords.latitude}&lon=${position.coords.longitude}&addressdetails=1`,
+            { headers: { 'Accept-Language': 'en' } }
+          );
+          const data = await response.json();
+          const address = data.address || {};
+          const city = address.city || address.town || address.village || address.county || 'Unknown';
+          const area = address.suburb || address.neighbourhood || address.state_district || address.state || '';
+          const locationData = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+            city,
+            area,
+            full: data.display_name || '',
+          };
+
+          localStorage.setItem(APP.locationKey, JSON.stringify(locationData));
+          updateLocationChip(chip, city, area);
+        } catch (error) {
+          if (label) label.textContent = originalText || 'Location detected';
+          showToast('Unable to fetch area details right now');
+        } finally {
+          chip.dataset.loading = 'false';
+        }
+      },
+      () => {
+        if (label) label.textContent = originalText;
+        chip.dataset.loading = 'false';
+        alert('Please allow location access to detect your area');
+      },
+      { enableHighAccuracy: true, timeout: 10000 }
+    );
+  });
+}
+
+function updateLocationChip(chip, city, area) {
+  const spans = chip.querySelectorAll('span');
+  if (spans.length < 2) return;
+
+  const display = area ? `${area}, ${city}` : city;
+  spans[1].textContent = display.length > 25 ? `${display.substring(0, 22)}...` : display;
+  chip.classList.add('location-detected');
+}
+
+function initGlobalSearch() {
+  const searchInput = document.getElementById('siteSearch');
+  if (!searchInput) return;
+
+  const searchbar = searchInput.closest('.searchbar');
+  if (!searchbar) return;
+
+  searchInput.setAttribute('autocomplete', 'off');
+
+  let dropdown = document.getElementById('searchDropdown');
+  if (!dropdown) {
+    dropdown = document.createElement('div');
+    dropdown.className = 'search-dropdown';
+    dropdown.id = 'searchDropdown';
+    searchbar.appendChild(dropdown);
+  }
+
+  const renderResults = (query) => {
+    const results = ALL_PRODUCTS.filter((product) => product.name.toLowerCase().includes(query)).slice(0, 10);
+
+    if (!results.length) {
+      dropdown.innerHTML = `<div class="search-no-results">No products found for &quot;${escapeText(query)}&quot;</div>`;
+      dropdown.classList.add('active');
+      return;
+    }
+
+    dropdown.innerHTML = results.map((product) => {
+      const categoryName = CATEGORY_NAMES[product.page] || product.page;
+      return `
+        <div class="search-result" data-page="${product.page}" data-product-id="${product.id}" data-product-name="${escapeAttr(product.name)}" role="button" tabindex="0">
+          <span class="search-result__emoji">${product.emoji || '🛍️'}</span>
+          <div class="search-result__info">
+            <span class="search-result__name">${highlightMatch(product.name, query)}<span class="search-category-tag">${escapeText(categoryName)}</span></span>
+            <span class="search-result__meta">${formatCurrency(product.price)}${product.weight ? ` · ${escapeText(product.weight)}` : ''}</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    dropdown.querySelectorAll('.search-result').forEach((result) => {
+      const openProduct = () => {
+        goToProduct(
+          result.dataset.page,
+          result.dataset.productId,
+          result.dataset.productName || ''
+        );
+      };
+
+      result.addEventListener('click', openProduct);
+      result.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openProduct();
+        }
+      });
+    });
+
+    dropdown.classList.add('active');
+  };
+
+  searchInput.addEventListener('input', (event) => {
+    const query = event.target.value.trim().toLowerCase();
+    if (query.length < 2) {
+      dropdown.classList.remove('active');
+      return;
+    }
+
+    renderResults(query);
+  });
+
+  searchInput.addEventListener('focus', () => {
+    const query = searchInput.value.trim().toLowerCase();
+    if (query.length >= 2) {
+      renderResults(query);
+    }
+  });
+
+  document.addEventListener('click', (event) => {
+    if (!event.target.closest('.searchbar')) {
+      dropdown.classList.remove('active');
+    }
+  });
+
+  searchInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      dropdown.classList.remove('active');
+    }
+  });
+}
+
+function goToProduct(page, productId, productName) {
+  const targetPage = CATEGORY_PAGES[page] || 'index.html';
+  const params = new URLSearchParams();
+
+  if (productName) params.set('search', productName);
+  if (productId) params.set('product', productId);
+
+  window.location.href = `${targetPage}?${params.toString()}`;
+}
+
+function checkSearchParam() {
+  const params = new URLSearchParams(window.location.search);
+  const searchTerm = params.get('search');
+  const productId = params.get('product');
+  if (!searchTerm && !productId) return;
+
+  const searchInput = document.getElementById('siteSearch');
+  if (searchInput && searchTerm) {
+    searchInput.value = searchTerm;
+    APP.searchText = searchTerm.trim().toLowerCase();
+    applyFilters();
+  }
+
+  if (productId) {
+    window.setTimeout(() => highlightProductCard(productId), 120);
+  }
+}
+
+function highlightProductCard(productId) {
+  document.querySelectorAll('.product-card--search-hit').forEach((card) => {
+    card.classList.remove('product-card--search-hit');
+  });
+
+  const card = document.querySelector(`.product-card[data-id="${productId}"]`);
+  if (!card || card.classList.contains('hidden')) return;
+
+  card.classList.add('product-card--search-hit');
+  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function highlightMatch(text, query) {
+  const normalizedText = text.toLowerCase();
+  const index = normalizedText.indexOf(query);
+  if (index === -1) return escapeText(text);
+
+  return `${escapeText(text.substring(0, index))}<mark>${escapeText(text.substring(index, index + query.length))}</mark>${escapeText(text.substring(index + query.length))}`;
 }
 
 function bindSoonLinks() {
