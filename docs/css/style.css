@@ -1049,28 +1049,28 @@ img { display: block; max-width: 100%; }
 
 .season-slide[data-season="summer"] {
   background: linear-gradient(135deg, #FFA726 0%, #FF7043 50%, #FFCA28 100%);
-  background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1600&h=600&fit=crop');
+  background-image: url('https://cdn.pixabay.com/photo/2016/09/21/04/46/barley-field-1684052_1280.jpg');
   background-size: cover;
   background-position: center;
 }
 
 .season-slide[data-season="monsoon"] {
   background: linear-gradient(135deg, #2E7D32 0%, #00695C 50%, #1B5E20 100%);
-  background-image: url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6?w=1600&h=600&fit=crop');
+  background-image: url('https://cdn.pixabay.com/photo/2016/11/14/03/16/rice-field-1822443_1280.jpg');
   background-size: cover;
   background-position: center;
 }
 
 .season-slide[data-season="autumn"] {
   background: linear-gradient(135deg, #E65100 0%, #F57C00 50%, #FFB300 100%);
-  background-image: url('https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=1600&h=600&fit=crop');
+  background-image: url('https://cdn.pixabay.com/photo/2017/10/10/07/48/hills-2836301_1280.jpg');
   background-size: cover;
   background-position: center;
 }
 
 .season-slide[data-season="winter"] {
   background: linear-gradient(135deg, #546E7A 0%, #78909C 50%, #B0BEC5 100%);
-  background-image: url('https://images.unsplash.com/photo-1482192505345-5655af888cc4?w=1600&h=600&fit=crop');
+  background-image: url('https://cdn.pixabay.com/photo/2015/12/01/20/28/road-1072823_1280.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -1946,7 +1946,7 @@ img { display: block; max-width: 100%; }
 /* Firebase Auth Integration */
 .auth-page {
   min-height: 100vh;
-  background: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1920&h=1080&fit=crop') center/cover no-repeat fixed;
+  background: url('https://cdn.pixabay.com/photo/2016/09/21/04/46/barley-field-1684052_1280.jpg') center/cover no-repeat fixed;
   position: relative;
 }
 .auth-page::before {
