@@ -347,7 +347,8 @@ img { display: block; max-width: 100%; }
 .subcategory-section {
   margin-bottom: 2rem;
 }
-.subcategory-section.is-empty {
+.subcategory-section.is-empty,
+.fashion-section.is-empty {
   display: none;
 }
 .subcategory-header {
@@ -2174,6 +2175,304 @@ img { display: block; max-width: 100%; }
   }
   .profile-hero { grid-template-columns: 1fr; justify-items: start; }
   .success-order-extra { grid-template-columns: 1fr; }
+}
+
+/* ===== FASHION TAB ZEPTO STYLE ===== */
+.fashion-section {
+  margin-bottom: 2rem;
+}
+
+.fashion-section__title {
+  margin: 0 0 1rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.fashion-section__title--caps {
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  color: #666;
+}
+
+.fashion-circles {
+  display: flex;
+  gap: 1.5rem;
+  padding: 0.5rem 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.fashion-circles::-webkit-scrollbar,
+.fashion-brand-cards::-webkit-scrollbar,
+.fashion-category-row::-webkit-scrollbar {
+  display: none;
+}
+
+.fashion-circle-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 96px;
+  text-align: center;
+  text-decoration: none;
+  color: #374151;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: transform 0.2s;
+}
+
+.fashion-circle-item:hover {
+  transform: translateY(-3px);
+}
+
+.fashion-circle-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  border: 3px solid #e5e7eb;
+  transition: border-color 0.2s;
+}
+
+.fashion-circle-item:hover .fashion-circle-img {
+  border-color: #7c3aed;
+}
+
+.fashion-deals-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  background: #fafafa;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.fashion-deals-sub {
+  display: block;
+  font-size: 0.75rem;
+  color: #9ca3af;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.fashion-deals-title {
+  margin: 0.25rem 0 0;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #1f2937;
+}
+
+.see-all-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1.25rem;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  color: #374151;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.see-all-btn:hover {
+  border-color: #7c3aed;
+  color: #7c3aed;
+  background: #f5f3ff;
+}
+
+.fashion-category-row,
+.fashion-brand-cards {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  scrollbar-width: none;
+}
+
+.fashion-cat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 72px;
+  text-align: center;
+  text-decoration: none;
+  color: #374151;
+  font-size: 0.72rem;
+  font-weight: 500;
+  transition: transform 0.2s;
+}
+
+.fashion-cat-item:hover {
+  transform: translateY(-2px);
+}
+
+.fashion-cat-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  border: 2px solid #f3f4f6;
+  transition: border-color 0.2s;
+}
+
+.fashion-cat-item:hover .fashion-cat-img {
+  border-color: #7c3aed;
+}
+
+.fashion-brand-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.fashion-brand-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 1rem;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+.fashion-brand-badge--count {
+  background: #111827;
+  border-color: #111827;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.fashion-brand-card {
+  position: relative;
+  flex: 0 0 240px;
+  min-height: 148px;
+  border-radius: 16px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  box-shadow: var(--shadow);
+}
+
+.fashion-brand-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(17, 24, 39, 0.1), rgba(17, 24, 39, 0.72));
+}
+
+.fashion-brand-card__text {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 1rem;
+  color: #fff;
+}
+
+.fashion-brand-card__text strong {
+  font-size: 1rem;
+}
+
+.fashion-brand-card__text span {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.fashion-collections {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.collection-card {
+  position: relative;
+  display: block;
+  border-radius: 12px;
+  overflow: hidden;
+  min-height: 160px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.collection-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.collection-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.3;
+}
+
+.collection-card__text {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  min-height: 160px;
+  padding: 1.25rem;
+}
+
+.collection-card__label {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.fashion-loot-deals .discount-chip {
+  min-height: 28px;
+  padding: 0 10px;
+  font-size: 0.78rem;
+}
+
+@media (max-width: 768px) {
+  .fashion-collections { grid-template-columns: repeat(2, 1fr); }
+  .fashion-circles { gap: 1rem; }
+  .fashion-circle-img { width: 64px; height: 64px; }
+  .fashion-brand-card { flex-basis: 200px; }
+  .fashion-deals-banner { padding: 1rem; }
+}
+
+@media (max-width: 480px) {
+  .fashion-deals-banner {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .fashion-collections {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .collection-card,
+  .collection-card__text {
+    min-height: 120px;
+  }
 }
 
 @media (max-width: 560px) {

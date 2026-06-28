@@ -436,6 +436,11 @@ function renderTabContent(tabName, container) {
     return;
   }
 
+  if (tabName === 'fashion') {
+    renderFashionTab(container);
+    return;
+  }
+
   renderCategoryTabContent(tabName, container);
 }
 
@@ -512,6 +517,129 @@ function renderCategoryTabContent(tabName, container) {
   applyFilters();
 }
 
+function renderFashionTab(container) {
+  if (!container) return;
+
+  const products = STORE_DATA.products.fashion || [];
+  const lootDeals = products.filter((product) => product.mrp > product.price && Math.round(((product.mrp - product.price) / product.mrp) * 100) >= 30);
+  const featuredDeals = (lootDeals.length ? lootDeals : products).slice(0, 12);
+  const categories = [
+    { name: "Men's Topwear", filter: 'mens-wear', img: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=120&h=120&fit=crop' },
+    { name: "Men's Bottomwear", filter: 'mens-wear', img: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=120&h=120&fit=crop' },
+    { name: "Women's Topwear", filter: 'womens-wear', img: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=120&h=120&fit=crop' },
+    { name: "Women's Bottomwear", filter: 'womens-wear', img: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=120&h=120&fit=crop' },
+    { name: "Men's Innerwear", filter: 'mens-innerwear', img: 'https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?w=120&h=120&fit=crop' },
+    { name: "Women's Innerwear", filter: 'womens-innerwear', img: 'https://images.unsplash.com/photo-1571019613576-2b22c76fd955?w=120&h=120&fit=crop' },
+    { name: 'Footwear', filter: 'mens-footwear', img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=120&h=120&fit=crop' },
+    { name: 'Jewellery', filter: 'jewellery', img: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=120&h=120&fit=crop' },
+    { name: 'Accessories', filter: 'handbags', img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=120&h=120&fit=crop' },
+    { name: 'Bags & Wallets', filter: 'handbags', img: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=120&h=120&fit=crop' },
+    { name: 'Eyewear', filter: 'eyewear', img: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=120&h=120&fit=crop' },
+    { name: 'Travel', href: 'fashion.html', img: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=120&h=120&fit=crop' },
+  ];
+  const brandBadges = ['Adidas', 'Puma', '30+ Brands'];
+  const brandCards = [
+    { name: 'Adidas Originals', tag: 'Street-ready styles', href: 'fashion.html?filter=mens-footwear', image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=480&h=280&fit=crop' },
+    { name: 'Puma Motion', tag: 'Athleisure essentials', href: 'fashion.html?filter=mens-footwear', image: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?w=480&h=280&fit=crop' },
+    { name: 'Denim Days', tag: 'Everyday favourites', href: 'fashion.html?filter=mens-wear', image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=480&h=280&fit=crop' },
+    { name: 'Chic Edit', tag: 'Minimal wardrobe picks', href: 'fashion.html?filter=womens-wear', image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=480&h=280&fit=crop' },
+  ];
+  const collections = [
+    { label: 'WORK FROM HOME COLLECTION', href: 'fashion.html?filter=womens-wear', gradient: 'linear-gradient(135deg,#667eea,#764ba2)', image: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=300&h=200&fit=crop' },
+    { label: 'OFFICE READY COLLECTION', href: 'fashion.html?filter=mens-wear', gradient: 'linear-gradient(135deg,#f093fb,#f5576c)', image: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=300&h=200&fit=crop' },
+    { label: 'FITNESS FOCUS COLLECTION', href: 'fashion.html?filter=mens-footwear', gradient: 'linear-gradient(135deg,#4facfe,#00f2fe)', image: 'https://images.unsplash.com/photo-1571019613576-2b22c76fd955?w=300&h=200&fit=crop' },
+    { label: 'DATE NIGHT LOOK COLLECTION', href: 'fashion.html?filter=womens-wear', gradient: 'linear-gradient(135deg,#a18cd1,#fbc2eb)', image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=300&h=200&fit=crop' },
+  ];
+
+  container.innerHTML = `
+    <section class="fashion-section">
+      <h3 class="fashion-section__title">New in store</h3>
+      <div class="fashion-circles">
+        <a href="fashion.html?filter=mens-wear" class="fashion-circle-item">
+          <div class="fashion-circle-img" style="background-image:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop')"></div>
+          <span>Men</span>
+        </a>
+        <a href="fashion.html?filter=womens-wear" class="fashion-circle-item">
+          <div class="fashion-circle-img" style="background-image:url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop')"></div>
+          <span>Women</span>
+        </a>
+        <a href="fashion.html" class="fashion-circle-item">
+          <div class="fashion-circle-img" style="background-image:url('https://images.unsplash.com/photo-1524499982521-1ffd58dd89ea?w=200&h=200&fit=crop')"></div>
+          <span>Travel & Accessories</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="fashion-deals-banner">
+      <div class="fashion-deals-info">
+        <span class="fashion-deals-sub">UP TO 60% OFF</span>
+        <h3 class="fashion-deals-title">DEALS OF THE DAY</h3>
+      </div>
+      <a href="fashion.html" class="see-all-btn">See All ›</a>
+    </section>
+
+    <section class="fashion-section">
+      <h3 class="fashion-section__title fashion-section__title--caps">Categories</h3>
+      <div class="fashion-category-row">
+        ${categories.map((category) => `
+          <a href="${category.href || `fashion.html?filter=${category.filter}`}" class="fashion-cat-item">
+            <div class="fashion-cat-img" style="background-image:url('${category.img}')"></div>
+            <span>${category.name}</span>
+          </a>
+        `).join('')}
+      </div>
+    </section>
+
+    <section class="fashion-section">
+      <div class="subcategory-header">
+        <h3>Most Loved Brands</h3>
+        <a href="fashion.html" class="see-all-link">See All →</a>
+      </div>
+      <div class="fashion-brand-strip">
+        ${brandBadges.map((brand, index) => `<span class="fashion-brand-badge${index === 2 ? ' fashion-brand-badge--count' : ''}">${brand}</span>`).join('')}
+      </div>
+      <div class="fashion-brand-cards">
+        ${brandCards.map((brand) => `
+          <a href="${brand.href}" class="fashion-brand-card" style="background-image:url('${brand.image}')">
+            <div class="fashion-brand-card__text">
+              <strong>${brand.name}</strong>
+              <span>${brand.tag}</span>
+            </div>
+          </a>
+        `).join('')}
+      </div>
+    </section>
+
+    <section class="fashion-section">
+      <h3 class="fashion-section__title">Curated collections</h3>
+      <div class="fashion-collections">
+        ${collections.map((collection) => `
+          <a href="${collection.href}" class="collection-card" style="background:${collection.gradient}">
+            <div class="collection-card__text">
+              <span class="collection-card__label">${collection.label}</span>
+            </div>
+            <img src="${collection.image}" alt="${collection.label}" loading="lazy" onerror="this.style.display='none'">
+          </a>
+        `).join('')}
+      </div>
+    </section>
+
+    <section class="fashion-section fashion-loot-deals" data-filter-section="loot-deals">
+      <div class="subcategory-header">
+        <h3>Loot Deals</h3>
+        <a href="fashion.html" class="see-all-link">See All →</a>
+      </div>
+      <div class="horizontal-scroll-row">
+        ${featuredDeals.map((product) => renderProductCard(product, 'fashion')).join('')}
+      </div>
+    </section>
+  `;
+
+  attachImageFallbacks(container);
+  bindCardButtons(container);
+  applyFilters();
+}
+
 function bindHomepageBrandFilters(container) {
   container.querySelectorAll('.brand-pill').forEach((pill) => {
     pill.addEventListener('click', () => {
@@ -528,7 +656,7 @@ function applyHomepageCategoryFilters(container = document.getElementById('homeT
   const activeBrand = APP.homeBrandFilter || 'all';
   const searchText = APP.searchText;
 
-  container.querySelectorAll('.subcategory-section').forEach((section) => {
+  container.querySelectorAll('[data-filter-section]').forEach((section) => {
     let visibleCards = 0;
 
     section.querySelectorAll('.product-card').forEach((card) => {
