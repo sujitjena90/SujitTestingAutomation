@@ -8,8 +8,12 @@ const APP = {
   orderKey: 'sjLastOrder',
   locationKey: 'sjUserLocation',
   activeFilter: 'all',
+  homeActiveTab: 'all',
+  homeBrandFilter: 'all',
+  homepageMarkup: '',
   searchText: '',
   toastTimer: null,
+  seasonalHeroTimer: null,
 };
 
 const ALL_PRODUCTS = Object.entries(STORE_DATA.products).flatMap(([page, items]) =>
@@ -36,6 +40,16 @@ const CATEGORY_PAGES = {
   toys: 'toys.html',
   fresh: 'fresh.html',
 };
+const HOME_TAB_PROMOS = {
+  grocery: { eyebrow: 'Pantry restock', title: 'Staples, snacks and household favourites', copy: 'Jump between atta, dairy, masala and beverages exactly like a quick-commerce aisle.' },
+  vegetables: { eyebrow: 'Fresh haul', title: 'Seasonal greens and fruit baskets', copy: 'Browse crispy vegetables, leafy picks and juicy fruits without leaving the homepage.' },
+  fresh: { eyebrow: 'Protein specials', title: 'Butcher-style freshness, delivered fast', copy: 'Switch between chicken, fish, eggs and ready-to-cook packs in one swipeable flow.' },
+  fashion: { eyebrow: 'Style edit', title: 'Daily fashion deals for every wardrobe', copy: 'Explore trending looks across men, women and kids in compact horizontal rails.' },
+  electronics: { eyebrow: 'Tech rush', title: 'Phones, audio and gadgets in one stream', copy: 'Swipe through bestselling electronics sections with brand-led discovery like Zepto.' },
+  'home-kitchen': { eyebrow: 'Home refresh', title: 'Cookware, storage and décor highlights', copy: 'Move from appliances to décor with promotional callouts between product rails.' },
+  beauty: { eyebrow: 'Glow picks', title: 'Skincare, makeup and grooming must-haves', copy: 'Find beauty essentials by subcategory while keeping quick access to full listing pages.' },
+  toys: { eyebrow: 'Play zone', title: 'Games and toys sorted for easy discovery', copy: 'Scroll through learning kits, action toys and indoor fun with quick add-to-cart access.' },
+};
 
 document.addEventListener('DOMContentLoaded', () => {
   markActiveTab();
@@ -50,6 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (page === 'home') {
     renderCircleCategories();
     renderHomeSections();
+    cacheHomepageMarkup();
+    initHomepageTabs();
   } else if (STORE_DATA.pageConfig[page]) {
     renderListingPage(page);
   }
@@ -157,13 +173,14 @@ function updateLocationChip(chip, city, area) {
 }
 
 function initSeasonalHero() {
+  window.clearInterval(APP.seasonalHeroTimer);
+
   const hero = document.querySelector('.seasonal-hero');
   const slides = document.querySelectorAll('.season-slide');
   const dots = document.querySelectorAll('.season-dot');
   if (!hero || slides.length === 0 || dots.length === 0) return;
 
   let current = 0;
-  let interval;
 
   function showSlide(index) {
     slides.forEach((slide) => slide.classList.remove('active'));
@@ -179,8 +196,8 @@ function initSeasonalHero() {
   }
 
   function startAutoPlay() {
-    clearInterval(interval);
-    interval = setInterval(nextSlide, 8000);
+    window.clearInterval(APP.seasonalHeroTimer);
+    APP.seasonalHeroTimer = window.setInterval(nextSlide, 8000);
   }
 
   dots.forEach((dot, index) => {
@@ -190,7 +207,7 @@ function initSeasonalHero() {
     });
   });
 
-  hero.addEventListener('mouseenter', () => clearInterval(interval));
+  hero.addEventListener('mouseenter', () => window.clearInterval(APP.seasonalHeroTimer));
   hero.addEventListener('mouseleave', startAutoPlay);
 
   showSlide(0);
@@ -382,6 +399,198 @@ function renderHomeSections() {
   applyFilters();
 }
 
+function cacheHomepageMarkup() {
+  const mount = document.getElementById('homeTabContent');
+  if (!mount) return;
+  APP.homepageMarkup = mount.innerHTML;
+}
+
+function initHomepageTabs() {
+  if (document.body.dataset.page !== 'home') return;
+
+  const tabs = document.querySelectorAll('.tabs-bar .category-tab');
+  const content = document.getElementById('homeTabContent');
+  if (!tabs.length || !content) return;
+
+  APP.homeActiveTab = document.body.dataset.tab || 'all';
+  APP.homeBrandFilter = 'all';
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', (event) => {
+      event.preventDefault();
+      const targetTab = tab.dataset.tab || 'all';
+      if (targetTab === APP.homeActiveTab && content.innerHTML) return;
+      renderTabContent(targetTab, content);
+    });
+  });
+}
+
+function renderTabContent(tabName, container) {
+  APP.homeActiveTab = tabName;
+  APP.homeBrandFilter = 'all';
+  document.body.dataset.tab = tabName;
+  markActiveTab();
+
+  if (tabName === 'all') {
+    restoreHomepageContent(container);
+    return;
+  }
+
+  renderCategoryTabContent(tabName, container);
+}
+
+function restoreHomepageContent(container) {
+  if (!container || !APP.homepageMarkup) return;
+  container.innerHTML = APP.homepageMarkup;
+  renderCircleCategories();
+  renderHomeSections();
+  initSeasonalHero();
+  applyFilters();
+}
+
+function renderCategoryTabContent(tabName, container) {
+  const products = STORE_DATA.products[tabName];
+  const config = STORE_DATA.pageConfig[tabName];
+  if (!container || !products || !config) return;
+
+  const filterLabels = Object.fromEntries(config.filters.map((filter) => [filter.value, filter.label]));
+  const grouped = new Map();
+
+  products.forEach((product) => {
+    const filterKey = product.filters?.[0] || 'other';
+    if (!grouped.has(filterKey)) grouped.set(filterKey, []);
+    grouped.get(filterKey).push(product);
+  });
+
+  const orderedKeys = config.filters
+    .filter((filter) => filter.value !== 'all')
+    .map((filter) => filter.value)
+    .filter((filterKey) => grouped.has(filterKey));
+  const extraKeys = [...grouped.keys()].filter((filterKey) => !orderedKeys.includes(filterKey));
+  const sectionKeys = [...orderedKeys, ...extraKeys];
+  const brands = getHomepageBrands(products);
+  const pageHref = CATEGORY_PAGES[tabName] || 'index.html';
+
+  let html = `
+    <section class="hero-section">
+      <div class="home-category-hero">
+        <h2>${escapeText(config.title)}</h2>
+        <p>${escapeText(config.subtitle)}</p>
+      </div>
+      <div class="brand-filters" aria-label="Filter ${escapeAttr(CATEGORY_NAMES[tabName] || config.title)} by brand">
+        <button class="brand-pill active" type="button" data-brand="all">All</button>
+        ${brands.map((brand) => `<button class="brand-pill" type="button" data-brand="${escapeAttr(normalizeToken(brand))}">${escapeText(brand)}</button>`).join('')}
+      </div>
+  `;
+
+  sectionKeys.forEach((filterKey, index) => {
+    const items = grouped.get(filterKey) || [];
+    const label = filterLabels[filterKey] || toTitleCase(filterKey);
+
+    html += `
+      <section class="subcategory-section" data-filter-section="${escapeAttr(filterKey)}">
+        <div class="subcategory-header">
+          <h3>${escapeText(label)}</h3>
+          <a href="${pageHref}?filter=${encodeURIComponent(filterKey)}" class="see-all-link">See All →</a>
+        </div>
+        <div class="horizontal-scroll-row">
+          ${items.map((product) => renderProductCard(product, tabName)).join('')}
+        </div>
+      </section>
+    `;
+
+    if ((index + 1) % 2 === 0 && index < sectionKeys.length - 1) {
+      html += renderCategoryPromo(tabName, index);
+    }
+  });
+
+  html += '</section>';
+  container.innerHTML = html;
+  attachImageFallbacks(container);
+  bindCardButtons(container);
+  bindHomepageBrandFilters(container);
+  applyFilters();
+}
+
+function bindHomepageBrandFilters(container) {
+  container.querySelectorAll('.brand-pill').forEach((pill) => {
+    pill.addEventListener('click', () => {
+      APP.homeBrandFilter = pill.dataset.brand || 'all';
+      container.querySelectorAll('.brand-pill').forEach((button) => button.classList.toggle('active', button === pill));
+      applyHomepageCategoryFilters(container);
+    });
+  });
+}
+
+function applyHomepageCategoryFilters(container = document.getElementById('homeTabContent')) {
+  if (!container) return;
+
+  const activeBrand = APP.homeBrandFilter || 'all';
+  const searchText = APP.searchText;
+
+  container.querySelectorAll('.subcategory-section').forEach((section) => {
+    let visibleCards = 0;
+
+    section.querySelectorAll('.product-card').forEach((card) => {
+      const matchesBrand = activeBrand === 'all' || (card.dataset.brand || '') === activeBrand;
+      const matchesSearch = !searchText || (card.dataset.name || '').includes(searchText);
+      const isVisible = matchesBrand && matchesSearch;
+      card.classList.toggle('hidden', !isVisible);
+      if (isVisible) visibleCards += 1;
+    });
+
+    section.classList.toggle('is-empty', visibleCards === 0);
+  });
+}
+
+function getHomepageBrands(products) {
+  const brands = [];
+
+  products.forEach((product) => {
+    const brand = getProductBrand(product);
+    if (brand && !brands.includes(brand)) brands.push(brand);
+  });
+
+  return brands.slice(0, 12);
+}
+
+function getProductBrand(product) {
+  const firstToken = String(product?.name || '').trim().split(/\s+/)[0] || '';
+  return firstToken.replace(/[^a-zA-Z0-9'&.-]/g, '') || 'SJ';
+}
+
+function normalizeToken(value) {
+  return String(value || '').trim().toLowerCase();
+}
+
+function toTitleCase(value) {
+  return String(value || '')
+    .split('-')
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
+}
+
+function renderCategoryPromo(tabName, index) {
+  const promo = HOME_TAB_PROMOS[tabName] || {
+    eyebrow: 'Featured drop',
+    title: 'Quick picks for every cart',
+    copy: 'Explore more handpicked items with fast access to the full category page.',
+  };
+  const themeClass = index % 4 === 1 ? 'banner--dark' : 'banner--lavender';
+  const pageHref = CATEGORY_PAGES[tabName] || 'index.html';
+
+  return `
+    <section class="banner tab-promo ${themeClass}">
+      <div>
+        <div class="banner__eyebrow">${escapeText(promo.eyebrow)}</div>
+        <h3>${escapeText(promo.title)}</h3>
+        <p>${escapeText(promo.copy)}</p>
+      </div>
+      <a class="banner__cta" href="${pageHref}">Explore ${escapeText(CATEGORY_NAMES[tabName] || 'category')}</a>
+    </section>
+  `;
+}
+
 function renderListingPage(page) {
   const hero = document.getElementById('listingHero');
   const filters = document.getElementById('filterBar');
@@ -433,6 +642,16 @@ function productCard(product, mode) {
       </div>
     </article>
   `;
+}
+
+function renderProductCard(product, category) {
+  const productWithPage = product.page ? product : { ...product, page: category };
+  const brand = normalizeToken(getProductBrand(productWithPage));
+
+  return productCard(productWithPage, 'row').replace(
+    '<article class="product-card product-card--row"',
+    `<article class="product-card product-card--row" data-brand="${escapeAttr(brand)}" data-category="${escapeAttr(category)}"`
+  );
 }
 
 function attachImageFallbacks(root) {
@@ -1072,6 +1291,11 @@ function applyFilters() {
   const page = document.body.dataset.page;
   const text = APP.searchText;
   if (page === 'home') {
+    if (APP.homeActiveTab !== 'all') {
+      applyHomepageCategoryFilters();
+      return;
+    }
+
     document.querySelectorAll('#homeSections .product-card').forEach((card) => {
       const name = card.dataset.name || '';
       card.classList.toggle('hidden', Boolean(text) && !name.includes(text));
