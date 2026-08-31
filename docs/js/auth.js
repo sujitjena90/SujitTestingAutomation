@@ -203,62 +203,101 @@
     return messages[code] || error?.message || 'Something went wrong. Please try again.';
   }
 
+  function localProfileFromUser(user, seed = {}) {
+    const cached = getCachedProfile() || {};
+    return {
+      uid: user?.uid || cached.uid || 'local-user',
+      name: seed.name || user?.displayName || cached.name || user?.email?.split('@')[0] || 'SJ Shopper',
+      email: user?.email || seed.email || cached.email || '',
+      phone: seed.phone || user?.phoneNumber || cached.phone || '',
+      createdAt: cached.createdAt || new Date().toISOString(),
+      addresses: Array.isArray(cached.addresses) ? cached.addresses : []
+    };
+  }
+
+  function isPermissionError(error) {
+    const code = String(error?.code || '');
+    return code === 'permission-denied' || code === 'firestore/permission-denied' || /permission/i.test(String(error?.message || ''));
+  }
+
   async function ensureUserProfile(user, seed = {}) {
-    if (!firebaseEnabled() || !user) return null;
-    const ref = window.db.collection('users').doc(user.uid);
-    const snapshot = await ref.get();
-    const baseProfile = {
-      uid: user.uid,
-      name: seed.name || user.displayName || user.email?.split('@')[0] || 'SJ Shopper',
-      email: user.email || seed.email || '',
-      phone: seed.phone || user.phoneNumber || '',
-      createdAt: window.firebase.firestore.FieldValue.serverTimestamp(),
-      addresses: []
-    };
+    const fallback = localProfileFromUser(user, seed);
+    if (!firebaseEnabled() || !user) return fallback;
+    try {
+      const ref = window.db.collection('users').doc(user.uid);
+      const snapshot = await ref.get();
+      const baseProfile = {
+        uid: user.uid,
+        name: seed.name || user.displayName || user.email?.split('@')[0] || 'SJ Shopper',
+        email: user.email || seed.email || '',
+        phone: seed.phone || user.phoneNumber || '',
+        createdAt: window.firebase.firestore.FieldValue.serverTimestamp(),
+        addresses: []
+      };
 
-    if (!snapshot.exists) {
-      await ref.set(baseProfile, { merge: true });
-      return { ...baseProfile, createdAt: new Date().toISOString() };
+      if (!snapshot.exists) {
+        try {
+          await ref.set(baseProfile, { merge: true });
+        } catch (error) {
+          if (!isPermissionError(error)) throw error;
+          return { ...baseProfile, createdAt: new Date().toISOString() };
+        }
+        return { ...baseProfile, createdAt: new Date().toISOString() };
+      }
+
+      const existing = snapshot.data() || {};
+      const merged = {
+        uid: user.uid,
+        name: existing.name || baseProfile.name,
+        email: existing.email || baseProfile.email,
+        phone: existing.phone || baseProfile.phone,
+        createdAt: existing.createdAt || new Date().toISOString(),
+        addresses: Array.isArray(existing.addresses) ? existing.addresses : []
+      };
+
+      if (!existing.name || !existing.email || !Array.isArray(existing.addresses)) {
+        try {
+          await ref.set({
+            name: merged.name,
+            email: merged.email,
+            phone: merged.phone,
+            addresses: merged.addresses
+          }, { merge: true });
+        } catch (error) {
+          if (!isPermissionError(error)) throw error;
+        }
+      }
+
+      return merged;
+    } catch (error) {
+      if (!isPermissionError(error)) throw error;
+      return fallback;
     }
-
-    const existing = snapshot.data() || {};
-    const merged = {
-      uid: user.uid,
-      name: existing.name || baseProfile.name,
-      email: existing.email || baseProfile.email,
-      phone: existing.phone || baseProfile.phone,
-      createdAt: existing.createdAt || new Date().toISOString(),
-      addresses: Array.isArray(existing.addresses) ? existing.addresses : []
-    };
-
-    if (!existing.name || !existing.email || !Array.isArray(existing.addresses)) {
-      await ref.set({
-        name: merged.name,
-        email: merged.email,
-        phone: merged.phone,
-        addresses: merged.addresses
-      }, { merge: true });
-    }
-
-    return merged;
   }
 
   async function getCurrentUserProfile() {
     const known = window.auth?.currentUser;
-    if (!firebaseEnabled() || !known) return getCachedProfile();
-    const snapshot = await window.db.collection('users').doc(known.uid).get();
-    if (!snapshot.exists) return ensureUserProfile(known);
-    const data = snapshot.data() || {};
-    const profile = {
-      uid: known.uid,
-      name: data.name || known.displayName || known.email?.split('@')[0] || 'SJ Shopper',
-      email: data.email || known.email || '',
-      phone: data.phone || known.phoneNumber || '',
-      createdAt: data.createdAt || null,
-      addresses: Array.isArray(data.addresses) ? data.addresses : []
-    };
-    setCachedAuth({ uid: known.uid, name: profile.name, email: profile.email, phone: profile.phone }, profile);
-    return profile;
+    if (!firebaseEnabled() || !known) return getCachedProfile() || localProfileFromUser(known);
+    try {
+      const snapshot = await window.db.collection('users').doc(known.uid).get();
+      if (!snapshot.exists) return ensureUserProfile(known);
+      const data = snapshot.data() || {};
+      const profile = {
+        uid: known.uid,
+        name: data.name || known.displayName || known.email?.split('@')[0] || 'SJ Shopper',
+        email: data.email || known.email || '',
+        phone: data.phone || known.phoneNumber || '',
+        createdAt: data.createdAt || null,
+        addresses: Array.isArray(data.addresses) ? data.addresses : []
+      };
+      setCachedAuth({ uid: known.uid, name: profile.name, email: profile.email, phone: profile.phone }, profile);
+      return profile;
+    } catch (error) {
+      if (!isPermissionError(error)) throw error;
+      const profile = localProfileFromUser(known);
+      setCachedAuth({ uid: profile.uid, name: profile.name, email: profile.email, phone: profile.phone }, profile);
+      return profile;
+    }
   }
 
   function updateNavbarForLoggedInUser(user) {
@@ -338,15 +377,11 @@
 
   async function signUpWithEmail(name, email, phone, password) {
     const credential = await window.auth.createUserWithEmailAndPassword(email, password);
-    await credential.user.updateProfile({ displayName: name });
-    await window.db.collection('users').doc(credential.user.uid).set({
-      uid: credential.user.uid,
-      name,
-      email,
-      phone,
-      createdAt: window.firebase.firestore.FieldValue.serverTimestamp(),
-      addresses: []
-    }, { merge: true });
+    try {
+      await credential.user.updateProfile({ displayName: name });
+    } catch (error) {
+      console.warn('Could not update display name', error);
+    }
     const profile = await ensureUserProfile(credential.user, { name, email, phone });
     setCachedAuth({ uid: credential.user.uid, name, email, phone }, profile);
     return profile;
