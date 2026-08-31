@@ -54,6 +54,7 @@ const HOME_TAB_PROMOS = {
 document.addEventListener('DOMContentLoaded', () => {
   markActiveTab();
   updateCartCount();
+  bindCategoryTabHover();
   bindSearch();
   initGlobalSearch();
   initLocationChip();
@@ -81,6 +82,29 @@ function markActiveTab() {
   const current = document.body.dataset.tab || 'all';
   document.querySelectorAll('.category-tab').forEach((tab) => {
     tab.classList.toggle('is-active', tab.dataset.tab === current);
+  });
+}
+
+function bindCategoryTabHover() {
+  document.querySelectorAll('.tabs-bar .category-tab').forEach((tab) => {
+    let hoverTimer;
+    tab.addEventListener('mouseenter', () => {
+      clearTimeout(hoverTimer);
+      hoverTimer = setTimeout(() => {
+        if (document.body.dataset.page === 'home') {
+          const targetTab = tab.dataset.tab || 'all';
+          const content = document.getElementById('homeTabContent');
+          if (!content || targetTab === APP.homeActiveTab) return;
+          renderTabContent(targetTab, content);
+          return;
+        }
+        const href = tab.getAttribute('href');
+        if (href && tab.dataset.tab !== (document.body.dataset.tab || 'all')) {
+          window.location.href = href;
+        }
+      }, 140);
+    });
+    tab.addEventListener('mouseleave', () => clearTimeout(hoverTimer));
   });
 }
 

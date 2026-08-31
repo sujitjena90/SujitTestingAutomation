@@ -276,6 +276,7 @@ img { display: block; max-width: 100%; }
 }
 .category-tab:hover,
 .category-tab.is-active { color: var(--primary-3); }
+.category-tab:hover::after,
 .category-tab.is-active::after {
   content: "";
   position: absolute;
@@ -286,6 +287,8 @@ img { display: block; max-width: 100%; }
   border-radius: 99px;
   background: var(--primary-3);
 }
+.category-tab:hover::after { opacity: 0.55; }
+.category-tab.is-active::after { opacity: 1; }
 
 .page-wrap { padding: 20px 0 42px; }
 .hero-stack { display: grid; gap: 18px; }
