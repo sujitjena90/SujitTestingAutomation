@@ -3,7 +3,8 @@
     user: 'sjAuthUser',
     profile: 'sjAuthProfile',
     redirect: 'sjAuthRedirect',
-    order: 'sjLastOrder'
+    order: 'sjLastOrder',
+    demo: 'sjAuthDemo'
   };
 
   const AUTH_PAGES = new Set(['login', 'signup']);
@@ -48,11 +49,34 @@
   function clearCachedAuth() {
     localStorage.removeItem(STORAGE_KEYS.user);
     localStorage.removeItem(STORAGE_KEYS.profile);
+    localStorage.removeItem(STORAGE_KEYS.demo);
+  }
+
+  function demoUserPayload() {
+    return {
+      uid: DEMO_ACCOUNT.uid,
+      name: DEMO_ACCOUNT.name,
+      email: DEMO_ACCOUNT.email,
+      phone: DEMO_ACCOUNT.phone
+    };
+  }
+
+  function isDemoSession() {
+    return localStorage.getItem(STORAGE_KEYS.demo) === '1' || getCachedUser()?.uid === DEMO_ACCOUNT.uid;
+  }
+
+  function restoreDemoSession() {
+    const user = demoUserPayload();
+    const profile = { ...user, createdAt: new Date().toISOString(), addresses: getCachedProfile()?.addresses || [] };
+    localStorage.setItem(STORAGE_KEYS.demo, '1');
+    setCachedAuth(user, profile);
+    return user;
   }
 
   function getKnownUser() {
+    if (isDemoSession()) return getCachedUser() || demoUserPayload();
     const liveUser = window.auth?.currentUser;
-    if (liveUser) {
+    if (liveUser && liveUser.uid !== DEMO_ACCOUNT.uid) {
       return {
         uid: liveUser.uid,
         name: liveUser.displayName || liveUser.email?.split('@')[0] || 'Account',
@@ -238,18 +262,13 @@
   }
 
   function updateNavbarForLoggedInUser(user) {
-    const label = user?.name || user?.email?.split('@')[0] || 'Profile';
+    const label = user?.name || user?.email?.split('@')[0] || 'Admin';
+    const shortName = label.split(' ')[0];
     document.querySelectorAll('.auth-action').forEach((action) => {
       action.href = 'profile.html';
       action.setAttribute('aria-label', `${label} profile`);
       action.classList.add('is-logged-in');
-      const icon = action.querySelector('span');
-      const text = action.querySelector('.auth-label');
-      if (icon) {
-        icon.textContent = getInitial(label);
-        icon.classList.add('auth-user-badge');
-      }
-      if (text) text.textContent = label.split(' ')[0];
+      action.innerHTML = `<span class="auth-user-badge">${escapeHtml(getInitial(label))}</span><span class="auth-label">${escapeHtml(shortName)}</span>`;
     });
   }
 
@@ -335,24 +354,14 @@
 
   function isDemoLogin(username, password) {
     const id = String(username || '').trim().toLowerCase();
-    return (id === DEMO_ACCOUNT.username || id === DEMO_ACCOUNT.email) && password === DEMO_ACCOUNT.password;
+    const pass = String(password || '').trim();
+    return (id === DEMO_ACCOUNT.username || id === DEMO_ACCOUNT.email) && pass === DEMO_ACCOUNT.password;
   }
 
   function loginWithDemo() {
-    const user = {
-      uid: DEMO_ACCOUNT.uid,
-      name: DEMO_ACCOUNT.name,
-      email: DEMO_ACCOUNT.email,
-      phone: DEMO_ACCOUNT.phone
-    };
-    const profile = {
-      ...user,
-      createdAt: new Date().toISOString(),
-      addresses: []
-    };
-    setCachedAuth(user, profile);
+    const user = restoreDemoSession();
     updateNavbarForLoggedInUser(user);
-    return profile;
+    return getCachedProfile();
   }
 
   async function loginWithEmail(email, password) {
@@ -648,11 +657,29 @@
     });
   }
 
-  function bindLoginPage() {
-    if (pageName() !== 'login') return;
-    redirectAuthenticatedUser();
+  function finishDemoLogin() {
+    loginWithDemo();
+    setMessage('loginSuccess', 'Logged in as Admin. Redirecting...', 'success');
+    window.setTimeout(() => {
+      window.location.href = 'index.html';
+    }, 80);
+  }
 
-    document.getElementById('loginForm')?.addEventListener('submit', async (event) => {
+  function bindLoginPage() {
+    const form = document.getElementById('loginForm');
+    if (!form) return;
+    if (isDemoSession()) {
+      updateNavbarForLoggedInUser(getKnownUser());
+      window.location.href = 'index.html';
+      return;
+    }
+
+    document.getElementById('demoAdminLoginBtn')?.addEventListener('click', (event) => {
+      event.preventDefault();
+      finishDemoLogin();
+    });
+
+    form.addEventListener('submit', async (event) => {
       event.preventDefault();
       setMessage('loginError', '', 'error');
       setMessage('loginSuccess', '', 'success');
@@ -665,9 +692,7 @@
       if (isDemoLogin(email, password)) {
         applyFieldState(emailInput, true);
         applyFieldState(passwordInput, true);
-        loginWithDemo();
-        setMessage('loginSuccess', 'Login successful. Redirecting...', 'success');
-        window.location.replace(consumeRedirect());
+        finishDemoLogin();
         return;
       }
 
@@ -1032,9 +1057,8 @@
           console.error(error);
         }
       } else {
-        const cached = getCachedUser();
-        if (cached?.uid === DEMO_ACCOUNT.uid) {
-          updateNavbarForLoggedInUser(cached);
+        if (isDemoSession()) {
+          updateNavbarForLoggedInUser(restoreDemoSession());
           if (pageName() === 'checkout') {
             if (typeof window.renderCheckoutPage === 'function') window.renderCheckoutPage();
             prefillCheckoutForm();
@@ -1055,18 +1079,19 @@
     if (AUTH_PAGES.has(current) || current === 'checkout' || current === 'profile') {
       rememberRedirect(current === 'profile' ? 'profile.html' : current === 'checkout' ? 'checkout.html' : getRedirectTarget());
     }
+    if (isDemoSession()) restoreDemoSession();
     renderCachedNavbar();
     bindPasswordToggles();
     bindLoginPage();
     bindSignupPage();
     bindProfilePage();
+    bindAuthStateWatcher();
     if (current === 'checkout' && !getKnownUser()) renderCheckoutAuthNotice();
     if (current === 'order-success') {
       enhanceSuccessPage(safeJsonParse(localStorage.getItem(STORAGE_KEYS.order) || 'null', null));
     }
+    window.setTimeout(renderCachedNavbar, 300);
   });
-
-  bindAuthStateWatcher();
 
   window.SJAuth = {
     isAuthenticated: () => Boolean(getKnownUser()),
