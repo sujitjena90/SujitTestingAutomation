@@ -1032,6 +1032,16 @@
           console.error(error);
         }
       } else {
+        const cached = getCachedUser();
+        if (cached?.uid === DEMO_ACCOUNT.uid) {
+          updateNavbarForLoggedInUser(cached);
+          if (pageName() === 'checkout') {
+            if (typeof window.renderCheckoutPage === 'function') window.renderCheckoutPage();
+            prefillCheckoutForm();
+          }
+          if (pageName() === 'profile') bindProfilePage();
+          return;
+        }
         clearCachedAuth();
         updateNavbarForGuest();
         if (pageName() === 'profile') window.location.replace(buildLoginHref('profile.html'));
