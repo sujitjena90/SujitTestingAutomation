@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="css/style.css?v=20260831f">
+  <link rel="stylesheet" href="css/style.css?v=20260831k">
 </head>
 <body class="auth-page" data-page="login">
   <main class="auth-layout">
@@ -19,23 +19,28 @@
       </a>
       <div class="auth-card__header">
         <h1 id="loginHeading">Welcome Back</h1>
-        <p>Login to continue shopping, checkout faster and track your orders.</p>
+        <p>Use the same <strong>email</strong> you registered with, not your name.</p>
+      </div>
+      <div class="auth-help">
+        <p><strong>Correct login:</strong> <em>abc1@gmail.com</em> and your password.</p>
+        <p><strong>Wrong:</strong> typing only the name <em>automation</em>.</p>
+        <p>Demo: <strong>admin</strong> / <strong>admin</strong></p>
       </div>
       <form id="loginForm" class="auth-form" novalidate>
-        <p class="auth-switch">Demo login: <strong>admin</strong> / <strong>admin</strong></p>
         <button class="primary-btn primary-btn--full" id="demoAdminLoginBtn" type="button">Continue as Admin</button>
         <label class="auth-field">
-          <span>Username or Email</span>
+          <span>Email *</span>
           <div class="auth-input-wrap">
             <span class="auth-input-icon">✉️</span>
-            <input id="loginEmail" type="text" placeholder="admin" autocomplete="username" required>
+            <input id="loginEmail" type="text" placeholder="e.g. abc1@gmail.com" autocomplete="username" required>
           </div>
+          <small class="auth-hint">Mandatory. Use your registered email. Name only will not work unless saved on this browser.</small>
         </label>
         <label class="auth-field">
-          <span>Password</span>
+          <span>Password *</span>
           <div class="auth-input-wrap auth-input-wrap--password">
             <span class="auth-input-icon">🔒</span>
-            <input id="loginPassword" type="password" placeholder="admin" autocomplete="current-password" required>
+            <input id="loginPassword" type="password" placeholder="Your signup password" autocomplete="current-password" required>
             <button class="password-toggle" type="button" data-password-toggle="loginPassword" aria-label="Show password">👁️</button>
           </div>
         </label>
@@ -108,6 +113,6 @@
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
   <script src="js/firebase-config.js"></script>
-  <script src="js/auth.js?v=20260831k"></script>
+  <script src="js/auth.js?v=20260831l"></script>
 </body>
 </html>

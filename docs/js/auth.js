@@ -4,7 +4,8 @@
     profile: 'sjAuthProfile',
     redirect: 'sjAuthRedirect',
     order: 'sjLastOrder',
-    demo: 'sjAuthDemo'
+    demo: 'sjAuthDemo',
+    localUsers: 'sjLocalUsers'
   };
 
   const AUTH_PAGES = new Set(['login', 'signup']);
@@ -384,7 +385,33 @@
     }
     const profile = await ensureUserProfile(credential.user, { name, email, phone });
     setCachedAuth({ uid: credential.user.uid, name, email, phone }, profile);
+    rememberLocalAccount(name, email);
     return profile;
+  }
+
+  function rememberLocalAccount(name, email) {
+    const username = String(name || '').trim().split(/\s+/)[0].toLowerCase();
+    const normalizedEmail = String(email || '').trim().toLowerCase();
+    if (!username || !normalizedEmail) return;
+    const users = safeJsonParse(localStorage.getItem(STORAGE_KEYS.localUsers) || '[]', []);
+    const next = users.filter((item) => item.username !== username && item.email !== normalizedEmail);
+    next.push({ username, email: normalizedEmail, name: String(name || '').trim() });
+    localStorage.setItem(STORAGE_KEYS.localUsers, JSON.stringify(next));
+  }
+
+  function resolveLoginId(value) {
+    const raw = String(value || '').trim();
+    const id = raw.toLowerCase();
+    if (!id) return '';
+    if (id.includes('@')) return raw;
+    if (id === DEMO_ACCOUNT.username) return DEMO_ACCOUNT.email;
+    const users = safeJsonParse(localStorage.getItem(STORAGE_KEYS.localUsers) || '[]', []);
+    const saved = users.find((item) => item.username === id || item.name?.toLowerCase() === id);
+    if (saved?.email) return saved.email;
+    const cached = getCachedProfile() || getCachedUser();
+    const cachedName = String(cached?.name || '').trim().split(/\s+/)[0].toLowerCase();
+    if (cachedName === id && cached?.email) return cached.email;
+    return raw;
   }
 
   function isDemoLogin(username, password) {
@@ -721,10 +748,11 @@
 
       const emailInput = document.getElementById('loginEmail');
       const passwordInput = document.getElementById('loginPassword');
-      const email = emailInput?.value.trim() || '';
+      const rawId = emailInput?.value.trim() || '';
       const password = passwordInput?.value || '';
+      const email = resolveLoginId(rawId);
 
-      if (isDemoLogin(email, password)) {
+      if (isDemoLogin(rawId, password) || isDemoLogin(email, password)) {
         applyFieldState(emailInput, true);
         applyFieldState(passwordInput, true);
         finishDemoLogin();
@@ -736,7 +764,7 @@
       applyFieldState(emailInput, validateEmail(email));
       applyFieldState(passwordInput, password.length >= 6);
       if (!validateEmail(email) || password.length < 6) {
-        setMessage('loginError', 'Enter a valid email and password, or use admin / admin.', 'error');
+        setMessage('loginError', 'Use your registered email (e.g. abc1@gmail.com), not your name. Password must be at least 6 characters. Demo: admin / admin.', 'error');
         return;
       }
 
@@ -744,6 +772,7 @@
       setButtonLoading(button, true, 'Logging in...');
       try {
         await loginWithEmail(email, password);
+        rememberLocalAccount(rawId.includes('@') ? email.split('@')[0] : rawId, email);
         setMessage('loginSuccess', 'Login successful. Redirecting...', 'success');
         window.location.replace(consumeRedirect());
       } catch (error) {
