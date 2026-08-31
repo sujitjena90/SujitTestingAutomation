@@ -833,11 +833,11 @@
       applyFieldState(passwordInput, password.length >= 6);
       applyFieldState(confirmInput, password === confirmPassword && confirmPassword.length >= 6);
 
-      if (name.length < 2) return setMessage('signupError', 'Please enter your full name.', 'error');
-      if (!validateEmail(email)) return setMessage('signupError', 'Please enter a valid email address.', 'error');
-      if (!validatePhone(phone)) return setMessage('signupError', 'Phone number must be 10 digits.', 'error');
-      if (password.length < 6) return setMessage('signupError', 'Password should be at least 6 characters long.', 'error');
-      if (password !== confirmPassword) return setMessage('signupError', 'Passwords do not match.', 'error');
+      if (name.length < 2) return setMessage('signupError', 'Full Name is mandatory. Enter at least 2 characters, e.g. Sujit Jena.', 'error');
+      if (!validateEmail(email)) return setMessage('signupError', 'Email is mandatory. Use a valid format like name@gmail.com.', 'error');
+      if (!validatePhone(phone)) return setMessage('signupError', 'Phone is mandatory. Enter exactly 10 digits, e.g. 9876543210. Do not add +91.', 'error');
+      if (password.length < 6) return setMessage('signupError', 'Password is mandatory. Use at least 6 characters, e.g. Automation@123.', 'error');
+      if (password !== confirmPassword) return setMessage('signupError', 'Confirm Password must match Password exactly.', 'error');
 
       const button = document.getElementById('signupSubmitBtn');
       setButtonLoading(button, true, 'Creating account...');

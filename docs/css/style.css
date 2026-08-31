@@ -2079,6 +2079,32 @@ img { display: block; max-width: 100%; }
 
 .auth-form { gap: 16px; }
 .auth-field { gap: 8px; }
+.auth-help {
+  margin: 0 0 18px;
+  padding: 14px 16px;
+  background: #f7f3ff;
+  border: 1px solid rgba(124, 58, 237, 0.16);
+  border-radius: 14px;
+  color: #4b4458;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+.auth-help h2 {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+}
+.auth-help ol {
+  margin: 0 0 10px;
+  padding-left: 18px;
+}
+.auth-help p { margin: 0; }
+.auth-hint {
+  display: block;
+  color: #6b6575;
+  font-size: 0.78rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
 .auth-field span,
 .auth-link-button,
 .auth-switch a,

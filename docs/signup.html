@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="css/style.css?v=20260831f">
+  <link rel="stylesheet" href="css/style.css?v=20260831k">
 </head>
 <body class="auth-page" data-page="signup">
   <main class="auth-layout">
@@ -19,49 +19,65 @@
       </a>
       <div class="auth-card__header">
         <h1 id="signupHeading">Create Account</h1>
-        <p>Save addresses, manage your profile and view all your previous orders.</p>
+        <p>All fields below are mandatory. Fill them in the correct format, then click Sign Up.</p>
+      </div>
+      <div class="auth-help">
+        <h2>How to register</h2>
+        <ol>
+          <li><strong>Full Name*</strong> — at least 2 letters. Example: <em>Sujit Jena</em></li>
+          <li><strong>Email*</strong> — a valid unused email. Example: <em>name@gmail.com</em></li>
+          <li><strong>Phone Number*</strong> — exactly 10 digits, no +91 or spaces. Example: <em>9876543210</em></li>
+          <li><strong>Password*</strong> — at least 6 characters. Stronger if you mix A–Z, a–z, 0–9 and a symbol. Example: <em>Automation@123</em></li>
+          <li><strong>Confirm Password*</strong> — type the same password again.</li>
+        </ol>
+        <p>If you see “email already registered”, go to <a href="login.html">Login</a> instead. Demo login is <strong>admin / admin</strong>.</p>
       </div>
       <form id="signupForm" class="auth-form" novalidate>
         <label class="auth-field">
-          <span>Full Name</span>
+          <span>Full Name *</span>
           <div class="auth-input-wrap">
             <span class="auth-input-icon">👤</span>
-            <input id="signupName" type="text" placeholder="Enter your full name" autocomplete="name" required>
+            <input id="signupName" type="text" placeholder="e.g. Sujit Jena" autocomplete="name" required minlength="2">
           </div>
+          <small class="auth-hint">Mandatory. Use your real name, minimum 2 characters.</small>
         </label>
         <label class="auth-field">
-          <span>Email</span>
+          <span>Email *</span>
           <div class="auth-input-wrap">
             <span class="auth-input-icon">✉️</span>
-            <input id="signupEmail" type="email" placeholder="Enter your email" autocomplete="email" required>
+            <input id="signupEmail" type="email" placeholder="e.g. name@gmail.com" autocomplete="email" required>
           </div>
+          <small class="auth-hint">Mandatory. Must include @ and a domain. One account per email.</small>
         </label>
         <label class="auth-field">
-          <span>Phone Number</span>
+          <span>Phone Number *</span>
           <div class="auth-input-wrap">
             <span class="auth-input-icon">📞</span>
-            <input id="signupPhone" type="tel" placeholder="10 digit mobile number" autocomplete="tel" maxlength="10" required>
+            <input id="signupPhone" type="tel" placeholder="e.g. 9876543210" autocomplete="tel" maxlength="10" required>
           </div>
+          <small class="auth-hint">Mandatory. Indian 10-digit mobile only. Do not add +91, 0, spaces or dashes.</small>
         </label>
         <label class="auth-field">
-          <span>Password</span>
+          <span>Password *</span>
           <div class="auth-input-wrap auth-input-wrap--password">
             <span class="auth-input-icon">🔒</span>
-            <input id="signupPassword" type="password" placeholder="Minimum 6 characters" autocomplete="new-password" required minlength="6">
+            <input id="signupPassword" type="password" placeholder="Min 6 characters, e.g. Automation@123" autocomplete="new-password" required minlength="6">
             <button class="password-toggle" type="button" data-password-toggle="signupPassword" aria-label="Show password">👁️</button>
           </div>
           <div class="password-strength" aria-live="polite">
             <div class="password-strength__bar"><span id="passwordStrengthBar"></span></div>
             <small id="passwordStrengthLabel">Password strength: weak</small>
           </div>
+          <small class="auth-hint">Mandatory. Minimum 6 characters. For a strong password use uppercase, lowercase, number and symbol.</small>
         </label>
         <label class="auth-field">
-          <span>Confirm Password</span>
+          <span>Confirm Password *</span>
           <div class="auth-input-wrap auth-input-wrap--password">
             <span class="auth-input-icon">✅</span>
-            <input id="signupConfirmPassword" type="password" placeholder="Re-enter your password" autocomplete="new-password" required minlength="6">
+            <input id="signupConfirmPassword" type="password" placeholder="Type the same password again" autocomplete="new-password" required minlength="6">
             <button class="password-toggle" type="button" data-password-toggle="signupConfirmPassword" aria-label="Show password">👁️</button>
           </div>
+          <small class="auth-hint">Mandatory. Must match Password exactly.</small>
         </label>
         <button class="primary-btn primary-btn--full auth-submit" id="signupSubmitBtn" type="submit">Sign Up</button>
         <p class="auth-message auth-message--error" id="signupError" hidden></p>
@@ -129,6 +145,6 @@
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
   <script src="js/firebase-config.js"></script>
-  <script src="js/auth.js?v=20260831j"></script>
+  <script src="js/auth.js?v=20260831k"></script>
 </body>
 </html>
