@@ -86,26 +86,62 @@ function markActiveTab() {
 }
 
 function bindCategoryTabHover() {
-  document.querySelectorAll('.tabs-bar .category-tab').forEach((tab) => {
-    let hoverTimer;
-    tab.addEventListener('mouseenter', () => {
-      clearTimeout(hoverTimer);
-      hoverTimer = setTimeout(() => {
-        if (document.body.dataset.page === 'home') {
-          const targetTab = tab.dataset.tab || 'all';
-          const content = document.getElementById('homeTabContent');
-          if (!content || targetTab === APP.homeActiveTab) return;
-          renderTabContent(targetTab, content);
-          return;
-        }
-        const href = tab.getAttribute('href');
-        if (href && tab.dataset.tab !== (document.body.dataset.tab || 'all')) {
-          window.location.href = href;
-        }
-      }, 140);
+  const bar = document.querySelector('.tabs-bar__inner');
+  if (!bar) return;
+
+  bar.querySelectorAll('.category-tab').forEach((tab) => {
+    if (tab.parentElement.classList.contains('category-tab-item')) return;
+
+    const wrap = document.createElement('div');
+    wrap.className = 'category-tab-item';
+    tab.parentNode.insertBefore(wrap, tab);
+    wrap.appendChild(tab);
+
+    const menu = document.createElement('div');
+    menu.className = 'tab-dropdown';
+    menu.innerHTML = categoryDropdownHTML(tab.dataset.tab || 'all');
+    wrap.appendChild(menu);
+
+    wrap.addEventListener('mouseenter', () => {
+      const rect = wrap.getBoundingClientRect();
+      menu.classList.toggle('tab-dropdown--right', rect.left + 280 > window.innerWidth);
     });
-    tab.addEventListener('mouseleave', () => clearTimeout(hoverTimer));
   });
+}
+
+function categoryDropdownHTML(tabKey) {
+  if (tabKey === 'all') {
+    return `
+      <div class="tab-dropdown__label">Shop by category</div>
+      ${Object.entries(CATEGORY_NAMES).map(([key, name]) => `
+        <a class="tab-dropdown__link" href="${CATEGORY_PAGES[key]}">${escapeText(name)}</a>
+      `).join('')}
+    `;
+  }
+
+  const pageKey = tabKey === 'home' ? 'home-kitchen' : tabKey;
+  const config = STORE_DATA.pageConfig[pageKey];
+  const products = STORE_DATA.products[pageKey] || [];
+  const pageHref = CATEGORY_PAGES[pageKey] || 'index.html';
+  const title = CATEGORY_NAMES[pageKey] || 'Category';
+
+  let html = `<a class="tab-dropdown__link tab-dropdown__link--all" href="${pageHref}">View all ${escapeText(title)}</a>`;
+  if (config?.filters) {
+    html += `<div class="tab-dropdown__label">Shop by type</div>`;
+    html += config.filters
+      .filter((filter) => filter.value !== 'all')
+      .map((filter) => `
+        <a class="tab-dropdown__link" href="${pageHref}?filter=${encodeURIComponent(filter.value)}">${escapeText(filter.label)}</a>
+      `)
+      .join('');
+  }
+  if (products.length) {
+    html += `<div class="tab-dropdown__label">Products</div>`;
+    html += products.map((product) => `
+      <a class="tab-dropdown__link" href="${pageHref}?product=${encodeURIComponent(product.id)}">${escapeText(product.name)}</a>
+    `).join('');
+  }
+  return html;
 }
 
 function bindSearch() {
@@ -342,12 +378,20 @@ function checkSearchParam() {
   const params = new URLSearchParams(window.location.search);
   const searchTerm = params.get('search');
   const productId = params.get('product');
-  if (!searchTerm && !productId) return;
+  const filter = params.get('filter');
 
   const searchInput = document.getElementById('siteSearch');
   if (searchInput && searchTerm) {
     searchInput.value = searchTerm;
     APP.searchText = searchTerm.trim().toLowerCase();
+    applyFilters();
+  }
+
+  if (filter) {
+    APP.activeFilter = filter;
+    document.querySelectorAll('.filter-chip').forEach((chip) => {
+      chip.classList.toggle('is-active', chip.dataset.filter === filter);
+    });
     applyFilters();
   }
 
