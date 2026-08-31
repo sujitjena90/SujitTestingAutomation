@@ -7,6 +7,14 @@
   };
 
   const AUTH_PAGES = new Set(['login', 'signup']);
+  const DEMO_ACCOUNT = {
+    username: 'admin',
+    password: 'admin',
+    uid: 'demo-admin',
+    name: 'Admin',
+    email: 'admin@sjmegamart.com',
+    phone: ''
+  };
 
   function firebaseEnabled() {
     return Boolean(window.firebaseReady && window.auth && window.db && window.firebase);
@@ -325,6 +333,28 @@
     return profile;
   }
 
+  function isDemoLogin(username, password) {
+    const id = String(username || '').trim().toLowerCase();
+    return (id === DEMO_ACCOUNT.username || id === DEMO_ACCOUNT.email) && password === DEMO_ACCOUNT.password;
+  }
+
+  function loginWithDemo() {
+    const user = {
+      uid: DEMO_ACCOUNT.uid,
+      name: DEMO_ACCOUNT.name,
+      email: DEMO_ACCOUNT.email,
+      phone: DEMO_ACCOUNT.phone
+    };
+    const profile = {
+      ...user,
+      createdAt: new Date().toISOString(),
+      addresses: []
+    };
+    setCachedAuth(user, profile);
+    updateNavbarForLoggedInUser(user);
+    return profile;
+  }
+
   async function loginWithEmail(email, password) {
     const credential = await window.auth.signInWithEmailAndPassword(email, password);
     const profile = await ensureUserProfile(credential.user);
@@ -626,17 +656,27 @@
       event.preventDefault();
       setMessage('loginError', '', 'error');
       setMessage('loginSuccess', '', 'success');
-      if (!requireFirebaseForAuth('loginError', 'loginSuccess')) return;
 
       const emailInput = document.getElementById('loginEmail');
       const passwordInput = document.getElementById('loginPassword');
       const email = emailInput?.value.trim() || '';
       const password = passwordInput?.value || '';
 
+      if (isDemoLogin(email, password)) {
+        applyFieldState(emailInput, true);
+        applyFieldState(passwordInput, true);
+        loginWithDemo();
+        setMessage('loginSuccess', 'Login successful. Redirecting...', 'success');
+        window.location.replace(consumeRedirect());
+        return;
+      }
+
+      if (!requireFirebaseForAuth('loginError', 'loginSuccess')) return;
+
       applyFieldState(emailInput, validateEmail(email));
       applyFieldState(passwordInput, password.length >= 6);
       if (!validateEmail(email) || password.length < 6) {
-        setMessage('loginError', 'Enter a valid email and password.', 'error');
+        setMessage('loginError', 'Enter a valid email and password, or use admin / admin.', 'error');
         return;
       }
 
